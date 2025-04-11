@@ -1,19 +1,21 @@
 import './App.css'
-import {useState} from 'react'
-import HomePage from './routes/HomePage.jsx'
-import LoginPage from './routes/LoginPage.jsx'
-import PastLogs from './routes/PastLogs.jsx'
-import SignUpPage from './routes/SignUpPage.jsx'
+import { BrowserRouter, Routes, Route } from 'react-router'
+import LoginPage from './routes/LoginPage/LoginPage'
+import HomePage from './routes/HomePage/HomePage' 
+import RootRedirect from './routes/RootRedirect/RootRedirect'
 
 function App() {
-    const [loginData, setLoginData] = useState({
-        username: "",
-        password: "",
-    });
 
     return (
-        <div>
-                <LoginPage setLoginData={setLoginData} />
+        <div className="app">
+            <BrowserRouter> 
+                <Routes>
+                    <Route path="/" element={<RootRedirect />}/>
+                    <Route path="/login" element={<LoginPage />}/>
+                    <Route path="/home" element={<HomePage />}/>
+                </Routes>
+             
+            </BrowserRouter>
         </div>
     )
 }
