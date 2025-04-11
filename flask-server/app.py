@@ -7,7 +7,7 @@ load_dotenv
 
 def create_app():
     app = Flask(__name__)
-    conn_string = os.getenv("DATABSE_URL")
+    conn_string = os.getenv("DATABASE_URL")
     app.config["SQLALCHEMY_DATABASE_URI"] = conn_string
     db.init_app(app)
 
