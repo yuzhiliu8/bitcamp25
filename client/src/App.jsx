@@ -4,7 +4,7 @@ import LoginPage from './routes/LoginPage/LoginPage'
 import HomePage from './routes/HomePage/HomePage' 
 import RootRedirect from './routes/RootRedirect/RootRedirect'
 import SignUpPage from './routes/SignUpPage/SignUpPage'
-import AccountPage from './routes/AccountPage/AccountPage'
+import ProfilePage from './routes/ProfilePage/ProfilePage'
 
 function App() {
 
@@ -16,7 +16,7 @@ function App() {
                     <Route path="/login" element={<LoginPage />}/>
                     <Route path="/home" element={<HomePage />}/>
                     <Route path="/signup" element={<SignUpPage />}/>
-                    <Route path="/account" element={<AccountPage />}/>
+                    <Route path="/profile" element={<ProfilePage />}/>
 
                 </Routes>
             </BrowserRouter>

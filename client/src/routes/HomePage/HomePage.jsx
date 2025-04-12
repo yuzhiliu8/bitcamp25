@@ -55,8 +55,7 @@ function HomePage() {
         </button>
         {showMenu && (
           <div className="hamburger-menu">
-            <button onClick={() => navigate('/account') }>My Account</button>
-            <button onClick={() => navigate('/pastlogs')}>Past Logs</button>
+            <button onClick={() => navigate('/profile') }>My Profile</button>
             <button onClick={() => navigate('/login') }>Sign Out</button>
           </div>
         )}
