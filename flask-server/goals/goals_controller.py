@@ -8,9 +8,11 @@ goals_service = GoalsService()
 auth_service = AuthService()
 
 
-@goals_controller.route("/show-goal/<int:user_id>", methods = ["GET"])
-def show_goal(user_id):
-    goal = goals_service.goal_by_id(user_id)
+@goals_controller.route("/show-goal/", methods = ["GET"])
+def show_goal():
+    session_id = request.cookies.get("sessionID")
+    session = auth_service.authenticate_session(session_id)
+    goal = goals_service.goal_by_id(session.user_id)
     if goal is None:
         resp = make_response("Goal not created!")
         resp.status_code = 404
@@ -33,12 +35,14 @@ def update_goal():
 
 @goals_controller.route("/create-goal", methods = ["POST"])
 def create_goal():
+    session_id = request.cookies.get("sessionID")
+    session = auth_service.authenticate_session(session_id)
     data = request.get_json()
     calorie = data.get("calorie_goal")
     protein = data.get("protein_goal")
     carb = data.get("carb_goal")
     fat = data.get("fat_goal")
-    userId = data.get("user_id")
+    userId = session.user_id
     
     newGoal = goals_service.create_goal(calorie, protein, carb, fat, userId)
     
