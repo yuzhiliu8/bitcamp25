@@ -6,6 +6,7 @@ import PastLogs from './routes/PastLogs/PastLogs'
 import GoalsPage from './routes/GoalsPage/GoalsPage'
 import RootRedirect from './routes/RootRedirect/RootRedirect'
 import SignUpPage from './routes/SignUpPage/SignUpPage'
+import AccountPage from './routes/AccountPage/AccountPage'
 
 function App() {
 
@@ -19,6 +20,8 @@ function App() {
                     <Route path="/signup" element={<SignUpPage />}/>
                     <Route path="/pastlogs" element={<PastLogs />}/>
                     <Route path="/goals" element={<GoalsPage />}/>
+                    <Route path="/account" element={<AccountPage />}/>
+
                 </Routes>
             </BrowserRouter>
         </div>
