@@ -22,6 +22,7 @@ def search_food(query, api_key):
     params = {
         "query": query,
         "pageSize": 1,
+        "dataType": ["Foundation", "SR Legacy", "Survey (FNDDS)"],
         "api_key": api_key,
     }
     response = requests.get(url, params=params)
