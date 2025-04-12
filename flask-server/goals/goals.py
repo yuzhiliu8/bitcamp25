@@ -6,16 +6,15 @@ from sqlalchemy import Integer, String, ForeignKey
 from flask_cors import CORS #type: ignore
 from users.users import User
 
+
 class Goal(db.Model):
     __tablename__ = "goals"
-    
-    calorie_goal: Mapped[float] = mapped_column(float,nullable = False)
-    protein_goal: Mapped[float] = mapped_column(float,nullable = False)
-    carb_goal: Mapped[float] = mapped_column(float,nullable = False)
-    fat_goal: Mapped[float] = mapped_column(float,nullable = False)
-    user_id: Mapped[int] = mapped_column(ForeignKey("users.id"), unique=True, nullable=False)
-
-    user: Mapped[User] = relationship("User", back_populates="goal")
+    id: Mapped[int] = mapped_column(primary_key=True)
+    calorie_goal: Mapped[int] = mapped_column(Integer,nullable = False)
+    protein_goal: Mapped[int] = mapped_column(Integer,nullable = False)
+    carb_goal: Mapped[int] = mapped_column(Integer,nullable = False)
+    fat_goal: Mapped[int] = mapped_column(Integer,nullable = False)
+    user_id: Mapped[int] = mapped_column(Integer, ForeignKey("users.id"), unique=True, nullable=False)
     
     def to_json(self):
         return{

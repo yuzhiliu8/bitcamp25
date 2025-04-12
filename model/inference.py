@@ -9,7 +9,7 @@ def main():
     # Load an Open Images Dataset V7 pretrained YOLOv8n model
     model = YOLO("yolov8x-oiv7.pt")
 
-    file = "model/inference-images/fruits.webp"
+    file = "model/food-101/images/waffles/1702.jpg"
 
     # Run prediction
     # run inference
@@ -22,6 +22,7 @@ def search_food(query, api_key):
     params = {
         "query": query,
         "pageSize": 1,
+        "dataType": ["Foundation", "SR Legacy", "Survey (FNDDS)"],
         "api_key": api_key,
     }
     response = requests.get(url, params=params)
@@ -44,14 +45,33 @@ def show_results(model, results):
     for class_name, count in class_counter.items():
         print(f"{class_name}: {count}")
         food_item = search_food(class_name, API_KEY)
-        print(get_calories_per_gram(food_item=food_item))
+        
+        macros = get_macros(food_item)
+        print(f"Macros: {macros}")
     
-def get_calories_per_gram(food_item):
+def get_macros(food_item):
+    macros = {
+        "cals_per_gram": None,
+        "protein": None,
+        "carbs": None,
+        "fat": None
+    }
+    
+    print(f"Using food: {food_item.get('description', 'Unknown')}")
+
     for nutrient in food_item.get("foodNutrients", []):
-        if 'energy' in nutrient['nutrientName'].lower() and nutrient['unitName'] == 'KCAL':
-            # usually given per 100g
-            print(f"Using food: {food_item.get('description', 'Unknown')}")
-            return nutrient['value'] / 100
-    return None
+        name = nutrient["nutrientName"].lower()
+        unit = nutrient["unitName"]
+
+        if "protein" in name and unit == "G" and macros["protein"] is None:
+            macros["protein"] = nutrient["value"] / 100  # per gram
+        elif "carbohydrate" in name and unit == "G" and macros["carbs"] is None:
+            macros["carbs"] = nutrient["value"] / 100
+        elif "total lipid" in name and unit == "G" and macros["fat"] is None:
+            macros["fat"] = nutrient["value"] / 100
+        elif "energy" in name and unit == 'KCAL' and macros["cals_per_gram"] is None:
+            macros["cals_per_gram"] = nutrient["value"] / 100
+    
+    return macros
 
 main()
