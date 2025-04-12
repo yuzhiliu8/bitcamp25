@@ -11,7 +11,7 @@ class Goal(db.Model):
     __tablename__ = "goals"
     id: Mapped[int] = mapped_column(primary_key=True)
     calorie_goal: Mapped[int] = mapped_column(Integer,nullable = False)
-    protein_goal: Mapped[float] = mapped_column(Integer,nullable = False)
+    protein_goal: Mapped[int] = mapped_column(Integer,nullable = False)
     carb_goal: Mapped[int] = mapped_column(Integer,nullable = False)
     fat_goal: Mapped[int] = mapped_column(Integer,nullable = False)
     user_id: Mapped[int] = mapped_column(Integer, ForeignKey("users.id"), unique=True, nullable=False)
