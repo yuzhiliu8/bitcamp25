@@ -1,0 +1,2 @@
+class GoalsService:
+    pass
