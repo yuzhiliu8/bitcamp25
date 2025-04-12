@@ -1,19 +1,20 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect } from 'react';
 import {
   PieChart,
   Pie,
   Cell,
   Tooltip,
   Legend,
-} from "recharts";
+} from 'recharts';
 import { useNavigate } from 'react-router';
-import "./HomePage.css";
+import './HomePage.css';
 
-const navigate = useNavigate();
 
-const HomePage = () => {
+
+function HomePage() {
   const [showMenu, setShowMenu] = useState(false);
   const menuRef = useRef();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleClickOutside = (e) => {
@@ -59,7 +60,7 @@ const HomePage = () => {
           <div className="hamburger-menu">
             <button onClick={() => navigate('/login') }>Sign Out</button>
             <button onClick={() => navigate('/pastlogs')}>Past Logs</button>
-            {/* <button onClick={() => navigate('/login')}>Set Goals</button> */}
+            <button onClick={() => navigate('/goals')}>Set Goals</button>
           </div>
         )}
       </div>
