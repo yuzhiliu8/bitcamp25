@@ -44,7 +44,8 @@ def show_results(model, results):
     for class_name, count in class_counter.items():
         print(f"{class_name}: {count}")
         food_item = search_food(class_name, API_KEY)
-        print(get_calories_per_gram(food_item=food_item))
+        cals_per_gram = get_calories_per_gram(food_item)
+        print(f"Cals/gram: {cals_per_gram}")
     
 def get_calories_per_gram(food_item):
     for nutrient in food_item.get("foodNutrients", []):
