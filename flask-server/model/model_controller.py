@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify, make_response
-from yolov8 import Yolov8
+from model.yolov8 import Yolov8
 from PIL import Image
 import io
 import os

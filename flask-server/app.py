@@ -6,6 +6,7 @@ from users.user_controller import user_controller
 from auth.auth_controller import auth_controller
 from cal_logs.cal_log_controller import cal_log_controller
 from goals.goals_controller import goals_controller
+from model.model_controller import model_controller
 
 from users.user_service import UserService
 from auth.auth_service import AuthService
@@ -20,6 +21,7 @@ def create_app():
     app.register_blueprint(auth_controller, url_prefix="/api/auth")
     app.register_blueprint(cal_log_controller, url_prefix="/api/callogs")
     app.register_blueprint(goals_controller, url_prefix = "/api/goal")
+    app.register_blueprint(model_controller, url_prefix = "/api/model")
 
     conn_string = os.getenv("DATABASE_URL")
     app.config["SQLALCHEMY_DATABASE_URI"] = conn_string
