@@ -1,13 +1,18 @@
 from flask import Blueprint, request, jsonify, make_response
 from users.user_service import UserService
+from auth.auth_service import AuthService
+
 
 user_controller = Blueprint('user_controller',__name__)
 user_service = UserService()
+auth_service = AuthService()
 
 
-@user_controller.route("/user-by-id/<int:id>", methods = ["GET"])
-def get_user_by_id(id):
-    user = user_service.user_by_id(id)
+@user_controller.route("/user-by-id/", methods = ["GET"])
+def get_user_by_id():
+    session_id = request.cookies.get("sessionID")
+    session = auth_service.authenticate_session(session_id)
+    user = user_service.user_by_id(session.user_id)
     if user is None:
         resp = make_response("User not found!")
         resp.status_code = 404
