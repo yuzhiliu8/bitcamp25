@@ -6,6 +6,10 @@ import os
 from users.user_controller import user_controller
 from auth.auth_controller import auth_controller
 
+from users.user_service import UserService
+from auth.auth_service import AuthService
+from cal_logs.cal_log_service import CalorieLogService
+
 
 def create_app():
     app = Flask(__name__)
@@ -16,10 +20,21 @@ def create_app():
     app.config["SQLALCHEMY_DATABASE_URI"] = conn_string
     db.init_app(app)
     
+    dev_mode = os.getenv("DEVELOPMENT_MODE")
     with app.app_context():
-        db.drop_all()
-        db.create_all()
+        if dev_mode == "True":
+            db.drop_all()
+            db.create_all()
 
+            u = UserService()
+            a = AuthService()
+            c = CalorieLogService()
+
+            u.init_db()
+            a.init_db()
+            c.init_db()
+        else:
+            db.create_all()
     return app
 
 if __name__ == "__main__":

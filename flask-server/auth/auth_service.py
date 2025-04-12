@@ -1,8 +1,8 @@
 from db import db
-import hashlib
 from auth.session import Session
 from users.users import User
 from datetime import datetime, timedelta
+from util import hash_string
 
 class AuthService:
 
@@ -34,12 +34,19 @@ class AuthService:
         return session
 
     def authenticate_session(self, session_id):
+        if session_id is None:
+            return None
         stmt = db.select(Session).where(Session.session_id == session_id)
         resp = db.session.execute(stmt).scalars().first()
         return resp
 
+    def init_db(self):
+        session = Session(
+            user_id=1,
+            expiry_date=datetime.now() + timedelta(days=5))
+        db.session.add(session)
+        db.session.commit()
+        return session
+    
 
-def hash_string(string):
-    encoded_string = string.encode('utf-8')
-    hashed = hashlib.sha256(encoded_string).hexdigest()
-    return hashed 
+
