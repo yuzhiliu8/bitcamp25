@@ -1,13 +1,15 @@
 import React, { useState } from "react";
 import "./SignUpPage.css";
 import { useNavigate } from 'react-router';
+import { API_URL } from "../../util/Constants";
 
 function SignUpPage() {
 
     const navigate = useNavigate();
 
     const [form, setForm] = useState({
-        name: "",
+        firstName: "",
+        lastName: "",
         email: "",
         password: "",
         confirmPassword: "",
@@ -18,14 +20,38 @@ function SignUpPage() {
         setForm((prev) => ({ ...prev, [name]: value }));
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
+        console.log(form)
         if (form.password !== form.confirmPassword) {
             alert("Please make sure your passwords match!");
-            return;}
-        else {
-            navigate('/home')
+            return;
         }
+
+        const body = {
+            email: form.email,
+            password: form.password,
+            first_name: form.firstName,
+            last_name: form.lastName,
+        }
+
+        const response = await fetch(`${API_URL}/api/users/create-user`, {
+            method: "POST",
+            body: JSON.stringify(body),
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+
+        if (response.status === 400) {
+            console.error("email already used!");
+            window.alert("email already used!");
+            return;
+        }
+
+        const data = await response.json();
+        console.log(data); 
+        navigate("/login");
     };
 
     return (
@@ -36,13 +62,21 @@ function SignUpPage() {
                     <form onSubmit={handleSubmit}>
                         <input
                             type="text"
-                            name="name"
-                            placeholder="Full Name"
-                            value={form.name}
+                            name="firstName"
+                            placeholder="First Name"
+                            value={form.firstName}
                             onChange={handleChange}
                             required
                         />
                     
+                        <input
+                            type="text"
+                            name="lastName"
+                            placeholder="Last Name"
+                            value={form.lastName}
+                            onChange={handleChange}
+                            required
+                        />
                         <input
                             type="email"
                             name="email"

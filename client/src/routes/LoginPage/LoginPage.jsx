@@ -2,12 +2,9 @@ import React, { useState } from 'react';
 import './LoginPage.css';
 import full_logo from '../../assets/full_logo.png';
 import { useNavigate } from 'react-router';
+import { API_URL } from '../../util/Constants';
 
 function LoginPage() {
-  const user = {
-    email: "andrewguo108.dog@gmail.com",
-    password: "hihi"
-  }
 
   const [info, setInfo] = useState({
     email: "",
@@ -21,13 +18,26 @@ function LoginPage() {
 
   const navigate = useNavigate();
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
-    if (info.email === user.email && info.password === user.password) {
-      navigate('/home');
+    const formData = new FormData();
+    formData.append('email', info.email);
+    formData.append('password', info.password);
+
+    const response = await fetch(`${API_URL}/api/auth/login`, {
+      method: 'POST',
+      body: formData,
+      credentials: 'include',
+    });
+
+    if (response.status == 401) {
+      console.error("Invalid username or password");
+      window.alert("Invalid username or password");
     } else {
-      <div>Error!</div>
+      const session = await response.json();
+      console.log(session);
+      navigate('/home');
     }
   };
 

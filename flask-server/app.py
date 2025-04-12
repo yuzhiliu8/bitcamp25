@@ -1,4 +1,5 @@
 from flask import Flask
+from flask_cors import CORS
 from dotenv import load_dotenv
 from db import db
 import os
@@ -17,11 +18,17 @@ from goals.goals_service import GoalsService
 
 def create_app():
     app = Flask(__name__)
+    CORS(app, supports_credentials=True)
     app.register_blueprint(user_controller, url_prefix="/api/users")
     app.register_blueprint(auth_controller, url_prefix="/api/auth")
     app.register_blueprint(cal_log_controller, url_prefix="/api/callogs")
     app.register_blueprint(goals_controller, url_prefix = "/api/goal")
-    app.register_blueprint(model_controller, url_prefix = "/api/model")
+
+
+    run_model = os.getenv("RUN_MODEL")
+    if run_model == "True":
+        print("registered blueprint")
+        app.register_blueprint(model_controller, url_prefix = "/api/model")
 
     conn_string = os.getenv("DATABASE_URL")
     app.config["SQLALCHEMY_DATABASE_URI"] = conn_string

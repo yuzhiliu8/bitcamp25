@@ -9,8 +9,7 @@ load_dotenv()
 model_controller = Blueprint('model_controller',__name__)
 api_key = os.getenv("USDA_API_KEY")
 model_path = os.getenv("MODEL_PATH")
-print(model_path, api_key)
-model = Yolov8(model_path, api_key)
+model = None
 
 @model_controller.route("/show-goal", methods = ["POST"])
 def inference():
@@ -22,5 +21,14 @@ def inference():
     image = Image.open(io.BytesIO(file.read()))
 
     # get macros
+    init_model()
     all_macros = model.inference(image)
     return jsonify(all_macros)
+
+def init_model():
+    global model
+    if model is None:
+        model = Yolov8(model_path, api_key)
+        print("Model initialized")
+    else:
+        print("Model already initialized")
