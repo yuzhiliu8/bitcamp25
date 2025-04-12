@@ -25,7 +25,7 @@ function LoginPage() {
     event.preventDefault();
 
     if (info.email === user.email && info.password === user.password) {
-      navigate('/homepage');
+      navigate('/home');
     } else {
       <div>Error!</div>
     }
