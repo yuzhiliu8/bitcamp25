@@ -21,7 +21,7 @@ class UserService:
         characters = string.ascii_letters + string.digits  # Includes uppercase, lowercase letters and digits
         salt = ''.join(random.choice(characters) for i in range(12))
         
-        encoded_string = (salt+pword).encode('utf-8')
+        encoded_string = (pword+salt).encode('utf-8')
         hashed = hashlib.sha256(encoded_string).hexdigest()
         
         emails = db.session.execute(
