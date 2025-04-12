@@ -52,7 +52,9 @@ class Yolov8:
                 elif "energy" in name and unit == 'KCAL' and macros["cals_per_gram"] is None:
                     macros["cals_per_gram"] = nutrient["value"] / 100
 
-            print(f"Macros: {macros}")
+            all_macros[class_name] = macros
+        
+        return all_macros
         
     def search_food(self, query):
         url = f"https://api.nal.usda.gov/fdc/v1/foods/search"
