@@ -4,12 +4,7 @@ import full_logo from '../../assets/full_logo.png';
 import { useNavigate } from 'react-router';
 import { API_URL } from '../../util/Constants';
 
-console.log(API_URL);
 function LoginPage() {
-  const user = {
-    email: "andrewguo108.dog@gmail.com",
-    password: "hihi"
-  }
 
   const [info, setInfo] = useState({
     email: "",
@@ -35,16 +30,14 @@ function LoginPage() {
       body: formData,
       credentials: 'include',
     });
-    const session = await response.json();
-    console.log(session);
 
-
-    
-    console.log(info.email, info.password)
-    if (info.email === user.email && info.password === user.password) {
-      navigate('/home');
+    if (response.status == 401) {
+      console.error("Invalid username or password");
+      window.alert("Invalid username or password");
     } else {
-      <div>Error!</div>
+      const session = await response.json();
+      console.log(session);
+      navigate('/home');
     }
   };
 

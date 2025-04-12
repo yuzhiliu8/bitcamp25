@@ -18,7 +18,7 @@ from goals.goals_service import GoalsService
 
 def create_app():
     app = Flask(__name__)
-    CORS(app)
+    CORS(app, supports_credentials=True)
     app.register_blueprint(user_controller, url_prefix="/api/users")
     app.register_blueprint(auth_controller, url_prefix="/api/auth")
     app.register_blueprint(cal_log_controller, url_prefix="/api/callogs")
