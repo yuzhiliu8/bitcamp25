@@ -74,7 +74,9 @@
   .options label {
     display: flex;
     align-items: center;
-  }
+    font-size: 14px;
+    gap: 4px;
+  }  
   
   a {
     color: #2A160C;
