@@ -4,10 +4,6 @@ import {
   Pie,
   Cell,
   Tooltip,
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
   Legend,
 } from "recharts";
 import "./HomePage.css";
@@ -41,22 +37,17 @@ const HomePage = () => {
   const remaining = totalGoal - consumed;
 
   const pieData = [
-    { name: "Protein", value: protein },
-    { name: "Carbs", value: carbs },
-    { name: "Fat", value: fat },
-    { name: "Remaining", value: remaining > 0 ? remaining : 0 },
+    { name: "Protein", value: protein, grams: 100 },
+    { name: "Carbs", value: carbs, grams: 225 },
+    { name: "Fat", value: fat, grams: 78 },
+    { name: "Remaining", value: remaining > 0 ? remaining : 0, grams: null },
   ];
 
   const COLORS = ["#6A38D9", "#F4A261", "#E76F51", "#E0E0E0"];
 
-  const macroData = [
-    { name: "Protein", grams: 100 },
-    { name: "Carbs", grams: 225 },
-    { name: "Fat", grams: 78 },
-  ];
-
   return (
     <div className="homepage">
+      {/* Hamburger Menu */}
       <div className="hamburger" ref={menuRef}>
         <button className="hamburger-button" onClick={() => setShowMenu(!showMenu)}>
           ☰
@@ -70,11 +61,13 @@ const HomePage = () => {
         )}
       </div>
 
+      {/* Header */}
       <header className="homepage-header">
         <h1>Today's Summary</h1>
         <p>{today}</p>
       </header>
 
+      {/* Pie Chart */}
       <section className="charts-section horizontal">
         <div className="chart-container relative">
           <h3>Calories Breakdown</h3>
@@ -93,37 +86,20 @@ const HomePage = () => {
                 <Cell key={`cell-${index}`} fill={COLORS[index]} />
               ))}
             </Pie>
-            <Tooltip />
+            <Tooltip
+              formatter={(value, name, props) => {
+                const grams = pieData[props.dataIndex]?.grams;
+                return grams ? [`${grams}g`, name] : [`${value} kcal`, name];
+              }}
+              cursor={{ fill: "#f5f5f5" }}
+            />
             <Legend verticalAlign="bottom" height={36} />
           </PieChart>
           <div className="goal-label">{totalGoal} kcal</div>
         </div>
-
-        <div className="chart-container">
-          <h3>Macros (grams)</h3>
-          <BarChart
-            width={300}
-            height={200}
-            data={macroData}
-            layout="vertical"
-            barCategoryGap={20}
-            barSize={24}
-          >
-            <XAxis type="number" />
-            <YAxis dataKey="name" type="category" />
-            <Tooltip
-              formatter={(value, name) => [`${value}g`, name]}
-              cursor={{ fill: "transparent" }}
-            />
-            <Bar dataKey="grams">
-              {macroData.map((entry, index) => (
-                <Cell key={`bar-${index}`} fill={COLORS[index]} />
-              ))}
-            </Bar>
-          </BarChart>
-        </div>
       </section>
 
+      {/* Goal Display */}
       <section className="goals-section">
         <h3>Current Goal</h3>
         <p>Daily Calorie Goal: {totalGoal} kcal</p>
