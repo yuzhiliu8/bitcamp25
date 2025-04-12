@@ -102,9 +102,11 @@ function HomePage() {
         <p>Daily Calorie Goal: {totalGoal} kcal</p>
       </section>
 
-      <button className="add-button">+</button>
-
-              {/* ADD DROPDOWN MENU (except it goes up) WITH UPLOAD IMAGE AND SET GOALS */}
+      <button className="add-button">fdas</button>
+      
+      {/* <div class="dropup">
+        <button class="dropbtn">fda</button> 
+      </div> */}
 
     </div>
   );
