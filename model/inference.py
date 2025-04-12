@@ -9,7 +9,7 @@ def main():
     # Load an Open Images Dataset V7 pretrained YOLOv8n model
     model = YOLO("yolov8x-oiv7.pt")
 
-    file = "model/inference-images/cucumbertomato.jpg"
+    file = "model/inference-images/fruits.webp"
 
     # Run prediction
     # run inference
@@ -47,9 +47,10 @@ def show_results(model, results):
         print(get_calories_per_gram(food_item=food_item))
     
 def get_calories_per_gram(food_item):
-    for nutrient in food_item['foodNutrients']:
+    for nutrient in food_item.get("foodNutrients", []):
         if 'energy' in nutrient['nutrientName'].lower() and nutrient['unitName'] == 'KCAL':
             # usually given per 100g
+            print(f"Using food: {food_item.get('description', 'Unknown')}")
             return nutrient['value'] / 100
     return None
 
