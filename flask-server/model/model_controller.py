@@ -8,7 +8,6 @@ import os
 model_controller = Blueprint('model_controller',__name__)
 api_key = os.getenv("USDA_API_KEY")
 model_path = os.getenv("MODEL_PATH")
-print(model_path)
 model = Yolov8(model_path, api_key)
 
 @model_controller.route("/show-model", methods = ["POST"])
