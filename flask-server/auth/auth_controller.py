@@ -20,7 +20,7 @@ def login():
         resp.set_data(session)
         return resp
 
-    resp.set_data(json.dumps({'session_id': session.session_id, 'user_id': 2, "expiry_date": "date"}))
+    resp.set_data(json.dumps({'session_id': session.session_id, 'user_id': session.user_id, "expiry_date": "date"}))
     resp.set_cookie("sessionID", str(session.session_id))
     return resp
 
