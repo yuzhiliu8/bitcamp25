@@ -9,7 +9,7 @@ api_key = os.getenv("USDA_API_KEY")
 model_path = os.getenv("MODEL_PATH")
 model = Yolov8(model_path, api_key)
 
-@model_controller.route("/show-goal/<int:user_id>", methods = ["POST"])
+@model_controller.route("/show-model", methods = ["POST"])
 def inference():
     if 'image' not in request.files:
         return jsonify({'error': 'No image provided'}), 400
