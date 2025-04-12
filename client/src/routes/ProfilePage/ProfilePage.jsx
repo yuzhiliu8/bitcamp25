@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect} from "react";
 import "./ProfilePage.css";
 import { useNavigate } from "react-router";
+import { API_URL } from "../../util/Constants";
 
 function ProfilePage() {
   const navigate = useNavigate();
@@ -18,12 +19,34 @@ function ProfilePage() {
     console.log(goals);
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     console.log(goals);
     //fix later
 
+    const formData = new FormData();
+    formData.append('calorie_goal', goals.calories);
+    formData.append('carbs_goal', goals.carbs);
+    formData.append('protein_goal', goals.protein);
+    formData.append('fat_goal', goals.fat);
     
+    const user_input = {
+      "calorie_goal": goals.calories,
+      "carbs_goal": goals.carbs,
+      "protein_goal": goals.protein,
+      "fat_goal":goals.fat
+    }
+
+    const response = await fetch(`${API_URL}/api/goal/update-goal/`, {
+      method: 'PATCH',
+      body: JSON.stringify(user_input),
+      credentials: 'include',
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    
+    console.log(response)
     // add stuff to make this work can either make it update on the spot or display a success message
   }
 
