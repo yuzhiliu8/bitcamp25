@@ -66,10 +66,16 @@ function HomePage() {
         <p>{today}</p>
       </header>
 
+
+      <section className="goals-section">
+        <h3>Current Goal</h3>
+        <p>Calories Consumed: {consumed}/{totalGoal} kcal</p>
+      </section>
+
       <section className="charts-section horizontal">
         <div className="chart-container relative">
           <h3>Calories Breakdown</h3>
-          <PieChart width={220} height={220}>
+          <PieChart width={350} height={350}>
             <Pie
               data={pieData}
               cx="50%"
@@ -97,16 +103,9 @@ function HomePage() {
         </div>
       </section>
 
-      <section className="goals-section">
-        <h3>Current Goal</h3>
-        <p>Daily Calorie Goal: {totalGoal} kcal</p>
-      </section>
 
-      <button className="add-button">fdas</button>
+      <button className="dropbtn">Log Food</button>
       
-      {/* <div class="dropup">
-        <button class="dropbtn">fda</button> 
-      </div> */}
 
     </div>
   );
