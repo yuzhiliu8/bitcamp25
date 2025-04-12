@@ -63,13 +63,13 @@ def get_macros(food_item):
         name = nutrient["nutrientName"].lower()
         unit = nutrient["unitName"]
 
-        if "protein" in name and unit == "G":
+        if "protein" in name and unit == "G" and macros["protein"] is None:
             macros["protein"] = nutrient["value"] / 100  # per gram
-        elif "carbohydrate" in name and unit == "G":
+        elif "carbohydrate" in name and unit == "G" and macros["carbs"] is None:
             macros["carbs"] = nutrient["value"] / 100
-        elif "total lipid" in name and unit == "G":
+        elif "total lipid" in name and unit == "G" and macros["fat"] is None:
             macros["fat"] = nutrient["value"] / 100
-        elif "energy" in name and unit == 'KCAL':
+        elif "energy" in name and unit == 'KCAL' and macros["cals_per_gram"] is None:
             macros["cals_per_gram"] = nutrient["value"] / 100
     
     return macros
