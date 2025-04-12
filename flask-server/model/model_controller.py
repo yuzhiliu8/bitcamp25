@@ -14,8 +14,10 @@ def inference():
     if 'image' not in request.files:
         return jsonify({'error': 'No image provided'}), 400
     
+    # get the image
     file = request.files["image"]
     image = Image.open(io.BytesIO(file.read()))
-    # get image somehow
-    # all_macros = model.inference(image)
-    pass
+
+    # get macros
+    all_macros = model.inference(image)
+    return jsonify(all_macros)
