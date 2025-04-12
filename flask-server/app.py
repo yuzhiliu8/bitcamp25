@@ -1,5 +1,6 @@
 from flask import Flask
 from dotenv import load_dotenv
+load_dotenv()
 from db import db
 from users.users import User
 import os
@@ -47,6 +48,5 @@ def create_app():
     return app
 
 if __name__ == "__main__":
-    load_dotenv()
     app = create_app()
     app.run(port=5000, debug=True)
