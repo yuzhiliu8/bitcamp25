@@ -21,9 +21,7 @@ export default function RootRedirect() {
                 navigate('/home');
             }
         }
-
         authenticate();
-        // navigate('/login');
     }, []);
 
 

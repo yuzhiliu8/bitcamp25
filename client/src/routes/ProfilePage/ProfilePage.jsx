@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./ProfilePage.css";
 import { useNavigate } from "react-router";
 
-function ProfilePage() {
+function ProfilePage({ session }) {
   const navigate = useNavigate();
 
   const [goals, updateGoals]=useState({

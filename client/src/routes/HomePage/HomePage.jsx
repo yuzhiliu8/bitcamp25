@@ -9,7 +9,7 @@ import {
 import { useNavigate } from 'react-router';
 import './HomePage.css';
 
-function HomePage() {
+function HomePage({ session }) {
   const [showMenu, setShowMenu] = useState(false);
   const menuRef = useRef();
   const navigate = useNavigate();
