@@ -4,7 +4,6 @@ import LoginPage from './routes/LoginPage/LoginPage'
 import HomePage from './routes/HomePage/HomePage' 
 import RootRedirect from './routes/RootRedirect/RootRedirect'
 import SignUpPage from './routes/SignUpPage/SignUpPage'
-import { useState } from 'react'
 
 function App() {
 
