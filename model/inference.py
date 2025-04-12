@@ -9,7 +9,7 @@ def main():
     # Load an Open Images Dataset V7 pretrained YOLOv8n model
     model = YOLO("yolov8x-oiv7.pt")
 
-    file = "model/inference-images/fruits.webp"
+    file = "model/food-101/images/waffles/1702.jpg"
 
     # Run prediction
     # run inference
@@ -45,15 +45,33 @@ def show_results(model, results):
     for class_name, count in class_counter.items():
         print(f"{class_name}: {count}")
         food_item = search_food(class_name, API_KEY)
-        cals_per_gram = get_calories_per_gram(food_item)
-        print(f"Cals/gram: {cals_per_gram}")
+        
+        macros = get_macros(food_item)
+        print(f"Macros: {macros}")
     
-def get_calories_per_gram(food_item):
+def get_macros(food_item):
+    macros = {
+        "cals_per_gram": None,
+        "protein": None,
+        "carbs": None,
+        "fat": None
+    }
+    
+    print(f"Using food: {food_item.get('description', 'Unknown')}")
+
     for nutrient in food_item.get("foodNutrients", []):
-        if 'energy' in nutrient['nutrientName'].lower() and nutrient['unitName'] == 'KCAL':
-            # usually given per 100g
-            print(f"Using food: {food_item.get('description', 'Unknown')}")
-            return nutrient['value'] / 100
-    return None
+        name = nutrient["nutrientName"].lower()
+        unit = nutrient["unitName"]
+
+        if "protein" in name and unit == "G":
+            macros["protein"] = nutrient["value"] / 100  # per gram
+        elif "carbohydrate" in name and unit == "G":
+            macros["carbs"] = nutrient["value"] / 100
+        elif "total lipid" in name and unit == "G":
+            macros["fat"] = nutrient["value"] / 100
+        elif "energy" in name and unit == 'KCAL':
+            macros["cals_per_gram"] = nutrient["value"] / 100
+    
+    return macros
 
 main()
