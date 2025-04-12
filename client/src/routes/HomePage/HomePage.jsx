@@ -6,7 +6,10 @@ import {
   Tooltip,
   Legend,
 } from "recharts";
+import { useNavigate } from 'react-router';
 import "./HomePage.css";
+
+const navigate = useNavigate();
 
 const HomePage = () => {
   const [showMenu, setShowMenu] = useState(false);
@@ -31,7 +34,7 @@ const HomePage = () => {
 
   const totalGoal = 2000;
   const protein = 400;
-  const carbs = 900;
+  const carbs = 700;
   const fat = 700;
   const consumed = protein + carbs + fat;
   const remaining = totalGoal - consumed;
@@ -54,9 +57,9 @@ const HomePage = () => {
         </button>
         {showMenu && (
           <div className="hamburger-menu">
-            <button onClick={() => alert("Sign out placeholder")}>Sign Out</button>
-            <button onClick={() => alert("Past logs placeholder")}>Past Logs</button>
-            <button onClick={() => alert("Create/Update Goals placeholder")}>Set Goals</button>
+            <button onClick={() => navigate('/login') }>Sign Out</button>
+            <button onClick={() => navigate('/pastlogs')}>Past Logs</button>
+            {/* <button onClick={() => navigate('/login')}>Set Goals</button> */}
           </div>
         )}
       </div>
