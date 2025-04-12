@@ -1,6 +1,7 @@
 from db import db
 import hashlib
 from auth.session import Session
+from users.users import User
 from datetime import datetime, timedelta
 
 class AuthService:
@@ -8,15 +9,23 @@ class AuthService:
     def __init__(self):
         self.db = db
 
-    def authenticate_user(self, email, password, salt):
-        #if email not exist, raise error
-        #if password doesn't match, raise error
-        hashed_password = hash_string(password + salt)
+    def authenticate_user(self, email, password):
+        stmt = db.select(User).where(User.email == email)
+        resp = db.session.execute(stmt).scalars().first()
+        if resp is None:
+            return "user_not_found"
+        
+        salt = resp.salt
+        print(salt)
 
-        user_id = 2 # fix when users is done
+        hashed_password = hash_string(password + salt)
+        print(hashed_password)
+
+        if hashed_password != resp.password:
+            return "invalid_password"
 
         session = Session(
-            user_id=user_id,
+            user_id=resp.id,
             expiry_date=datetime.now() + timedelta(days=5))
         
         db.session.add(session)

@@ -2,7 +2,6 @@ from flask import Blueprint, request, make_response
 from auth.auth_service import AuthService
 from auth.session import Session
 import json
-from datetime import datetime, timedelta
 
 auth_controller = Blueprint('auth_controller', __name__)
 auth_service = AuthService()
@@ -12,12 +11,16 @@ def login():
     email = request.form['email']
     password = request.form['password']
 
-    session = auth_service.authenticate_user(email, password, "salt") #get salt from users table
-    #if users exists in db
+    resp = make_response()
 
-    
-    print(session.session_id, type(session.session_id))
-    resp = make_response(json.dumps({'session_id': session.session_id, 'user_id': 2, "expiry_date": "date"}))
+    session = auth_service.authenticate_user(email, password) #get salt from users table
+
+    if session == "user_not_found" or session == "invalid_password":
+        resp.status_code = 401
+        resp.set_data(session)
+        return resp
+
+    resp.set_data(json.dumps({'session_id': session.session_id, 'user_id': 2, "expiry_date": "date"}))
     resp.set_cookie("sessionID", str(session.session_id))
     return resp
 
