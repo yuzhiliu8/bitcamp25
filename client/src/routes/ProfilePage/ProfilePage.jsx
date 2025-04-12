@@ -1,24 +1,36 @@
 import React, { useState } from "react";
-import "./AccountPage.css";
+import "./ProfilePage.css";
 import { useNavigate } from "react-router";
 
-function AccountPage() {
+function ProfilePage() {
   const navigate = useNavigate();
+
+  const [goals, updateGoals]=useState({
+    calories: 0,
+    carbs: 0,
+    protein: 0,
+    fat: 0,
+  });
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    updateGoals(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    
+  }
 
   const user = {
     name: "Andrew Guo",
     email: "andrewguo108.dog@gmail.com",
-    password: "hihi",
-  };
-
-  const handlePasswordChange = () => {
-    alert("Password change placeholder");
   };
 
   return (
     <div className="account-wrapper">
       <div className="account-box">
-        <h2>Account Settings</h2>
+        <h2>My Profile</h2>
 
         <div className="account-field">
           <label>Name</label>
@@ -30,13 +42,12 @@ function AccountPage() {
           <div className="account-value">{user.email}</div>
         </div>
 
-        <div className="account-field">
-          <label>Password</label>
-          <div className="account-value">{user.password}</div>
-        </div>
+        <form>
+          {/* write each goal */}
+        </form>
 
         <div className="button-group">
-          <button onClick={handlePasswordChange}>Change Password</button>
+          {/* add a button for update goals */}
           <button className="back-button" onClick={() => navigate("/home")}>
             Back to Home
           </button>
@@ -46,4 +57,4 @@ function AccountPage() {
   );
 };
 
-export default AccountPage;
+export default ProfilePage;
