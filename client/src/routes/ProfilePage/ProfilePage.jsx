@@ -20,6 +20,10 @@ function ProfilePage() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    console.log(goals);
+    //fix later
+
+    
     // add stuff to make this work can either make it update on the spot or display a success message
   }
 
@@ -43,40 +47,47 @@ function ProfilePage() {
           <div className="account-value">{user.email}</div>
         </div>
 
+        {/* <div className="account-field">
+          <label>Calories:</label>
+          <input name="calories" className="acc-val2" value={"hh"}/>
+        </div> */}
+       
+
         <form onSubmit={handleSubmit} className="account-field">
-          <label>Calories:&nbsp;</label>
+          <label>Calories</label>
           <input 
-          className="account-value"
-          type="calories"
-          placeholder={goals.calories}
-          name="calories"
-          onChange={handleChange}>
+            className="acc-val2"
+            type="calories"
+            placeholder={goals.calories}
+            name="calories"
+            onChange={handleChange}>
           </input>
-          <label>Carbs:&nbsp;</label>
+          <label>Carbs</label>
           <input
-            className="account-value"
+            className="acc-val2"
             type="carbs"
             placeholder={goals.carbs}
             name="carbs"
             onChange={handleChange}>
           </input>
-          <label>Protein:&nbsp;</label>
+          <label>Protein</label>
           <input
-            className="account-value"
+            className="acc-val2"
             type="protein"
             placeholder={goals.protein}
             name="protein"
             onChange={handleChange}> 
           </input>
-          <label>Fat:&nbsp;</label>
+          <label>Fat</label>
           <input
-            className="account-value"
+            className="acc-val2"
             type="fat"
             placeholder={goals.fat}
             name="fat"
             onChange={handleChange}>
           </input>
-          <button type="submit">Update Goals</button>
+          
+          <button className="update-goals-btn" type="submit">Update Goals</button>
         </form>
 
         <div className="button-group">

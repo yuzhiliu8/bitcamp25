@@ -58,6 +58,7 @@ function LoginPage() {
 
         <form onSubmit={handleSubmit}>
           <input
+            className="login-input"
             type="email"
             placeholder="Email"
             name="email"
@@ -65,6 +66,7 @@ function LoginPage() {
             required
           />
           <input
+            className="login-input"
             type="password"
             placeholder="Password"
             name="password"
