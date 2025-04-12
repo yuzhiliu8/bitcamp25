@@ -27,7 +27,7 @@ def create_user():
     
     if newUser is None:
         resp = make_response("Email is already used!")
-        resp.status_code = 404
+        resp.status_code = 400
         return resp
     
     return jsonify(newUser.to_json())
