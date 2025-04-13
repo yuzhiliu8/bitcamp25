@@ -13,8 +13,8 @@ function LogFoodPage() {
   const [image, setImage] = useState(null);
   const [preview, setPreview] = useState(null);
   const [fileName, setFileName] = useState('');
-  const [detectedItems, setDetectedItems] = useState([]); // State to store detected items and their details
-  const [grams, setGrams] = useState({}); // Store grams for each item
+  const [detectedItems, setDetectedItems] = useState([]);
+  const [grams, setGrams] = useState({});
   const [mealType, setMealType] = useState('');
 
   const handleMealTypeChange = (e) => {
@@ -36,8 +36,6 @@ function LogFoodPage() {
       })
       const data = await response.json()
       console.log(data)
-      // Here you would call your computer vision model to detect items
-      // Simulating with a mock example of detected items
       // const detected = [
       //   { id: 1, name: 'Apple', calPerGram: 0.52, carbsPerGram: 0.14, proteinPerGram: 0.01, fatPerGram: 0.01 },
       //   { id: 2, name: 'Banana', calPerGram: 0.89, carbsPerGram: 0.23, proteinPerGram: 0.01, fatPerGram: 0.03 }
@@ -50,7 +48,7 @@ function LogFoodPage() {
         proteinPerGram: values.protein,
         fatPerGram: values.fat
       }));
-      setDetectedItems(detected); // Set the detected items
+      setDetectedItems(detected);
       console.log(detectedItems)
     }
   };
@@ -168,7 +166,7 @@ function LogFoodPage() {
         {detectedItems.length > 0 && (
           <div className="item-form-container">
             {detectedItems.map(item => {
-              const totalGrams = grams[item.id] || 0; // Default to 0 if no grams entered
+              const totalGrams = grams[item.id] || 0;
               const totalCalories = (item.calPerGram * totalGrams).toFixed(2);
               const totalCarbs = (item.carbsPerGram * totalGrams).toFixed(2);
               const totalProtein = (item.proteinPerGram * totalGrams).toFixed(2);
