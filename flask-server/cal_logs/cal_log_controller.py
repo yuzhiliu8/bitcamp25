@@ -51,4 +51,7 @@ def update_cal_log():
     resp.status_code = 200
     return resp
     
+# @cal_log_controller.route('/get-diary-list', methods=["POST"])
+# def get_diary_list():
+#     resp = make_response()
     

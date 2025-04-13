@@ -92,9 +92,9 @@ class CalorieLogs(db.Model):
             date=date,
 
             diary={
-                "breakfast_ids": [],
-                "lunch_ids": [],
-                "dinner_ids": []
+                "breakfast": [],
+                "lunch": [],
+                "dinner": []
             },
 
             total_calories=0,

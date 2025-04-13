@@ -35,7 +35,6 @@ function HomePage({ session }) {
       const formattedEST = formatter.format(selectedDate); 
       const formData = new FormData();
       formData.append('date', formattedEST);
-      console.log(formattedEST);
 
       const response = await fetch(`${API_URL}/api/callogs/get-cal-log`, {
         method: "POST",
@@ -97,7 +96,6 @@ function HomePage({ session }) {
             selected={selectedDate}
             onChange={(date) => {
               setSelectedDate(date);
-              console.log(date);
             }}
             customInput={<FaCalendarAlt size={20}/>}
             />
@@ -139,7 +137,9 @@ function HomePage({ session }) {
                 {calLog.breakfast_calories}
               </div>
               
-              {/* <MealItem name={"Eggs"} cals={'500'}/> */}
+              {(calLog.diary) && (calLog.diary.breakfast.map((food_item, i) => 
+                (<MealItem key={i} name={food_item.name} cals={food_item.calories}/>)
+              ))}
               
             </div>
             <div className="entry">
@@ -149,6 +149,10 @@ function HomePage({ session }) {
                 <div className="space"></div>
                 {calLog.lunch_calories}
               </div>
+
+              {(calLog.diary) && (calLog.diary.lunch.map((food_item, i) => 
+                (<MealItem key={i} name={food_item.name} cals={food_item.calories}/>)
+              ))}
             </div>
             <div className="entry">
               <div className="title">
@@ -156,6 +160,10 @@ function HomePage({ session }) {
                 <div className="space"></div>
                 {calLog.dinner_calories}
               </div>
+
+              {(calLog.diary) && (calLog.diary.dinner.map((food_item, i) => 
+                (<MealItem key={i} name={food_item.name} cals={food_item.calories}/>)
+              ))}
             </div>
           </div>
         </div>
