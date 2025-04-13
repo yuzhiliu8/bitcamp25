@@ -70,7 +70,6 @@ useEffect(()=>{
     });
     
     console.log(response)
-    // add stuff to make this work can either make it update on the spot or display a success message
   }
 
 
@@ -94,12 +93,6 @@ useEffect(()=>{
           <label>Email</label>
           <div className="account-value">{user.email}</div>
         </div>
-
-        {/* <div className="account-field">
-          <label>Calories:</label>
-          <input name="calories" className="acc-val2" value={"hh"}/>
-        </div> */}
-       
 
         <form onSubmit={handleSubmit} className="account-field">
           <label>Calories</label>
@@ -139,7 +132,7 @@ useEffect(()=>{
         </form>
 
         <div className="button-group">
-          <button className="back-button" onClick={() => navigate("/home")}>
+          <button style={{width:"340px"}} onClick={() => navigate("/home")}>
             Back to Home
           </button>
         </div>
