@@ -12,7 +12,9 @@ auth_service = AuthService()
 def get_cal_log():
     resp = make_response()
     session_id = request.cookies.get('sessionID')
+    print(session_id)
     session = auth_service.authenticate_session(session_id)
+    print(session)
     if session is None:
         resp.status_code = 401
         resp.set_data("session does not exist or is expired")
@@ -23,8 +25,12 @@ def get_cal_log():
 
     date_str = request.form['date']
     cal_log = cal_log_service.get_cal_log_by_date(user_id, date_str)
+    print(cal_log.to_dict())
 
-    return make_response(cal_log.to_dict())
+    resp.set_data(json.dumps(cal_log.to_dict()))
+    resp.status_code = 200
+
+    return resp
 
 @cal_log_controller.route('/update-cal-log', methods=["POST"])
 def update_cal_log():

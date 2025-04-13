@@ -10,24 +10,57 @@ import { useNavigate } from 'react-router';
 import SideMenu from '../../components/SideMenu/SideMenu';
 import MealItem from '../../components/MealItem/MealItem';
 import DatePicker from 'react-datepicker';
+import PieChartWrapper from '../../components/PieChartWrapper/PieChartWrapper';
 import { FaCalendarAlt } from 'react-icons/fa';
 import "react-datepicker/dist/react-datepicker.css";
 import './HomePage.css';
+import { API_URL } from '../../util/Constants';
 
 function HomePage({ session }) {
   const [selectedDate, setSelectedDate] = useState(new Date());
-  const menuRef = useRef();
+  const [calLog, setCalLog] = useState({});
+  const [goals, setGoals] = useState({});
   const navigate = useNavigate();
 
+
   useEffect(() => {
-    const handleClickOutside = (e) => {
-      if (menuRef.current && !menuRef.current.contains(e.target)) {
-        setShowMenu(false);
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
+    const getData = async () => {
+      const formatter = new Intl.DateTimeFormat('en-CA', {
+        timeZone: 'America/New_York',
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+      });
+
+      const formattedEST = formatter.format(selectedDate); 
+      const formData = new FormData();
+      formData.append('date', formattedEST);
+      console.log(formattedEST);
+
+      const response = await fetch(`${API_URL}/api/callogs/get-cal-log`, {
+        method: "POST",
+        body: formData,
+        credentials: 'include'
+      });
+
+      const data = await response.json();
+      setCalLog(data);
+      console.log(data);
+
+
+      const goalResponse = await fetch(`${API_URL}/api/goal/show-goal`, {
+        method: "GET",
+        credentials: "include"
+      });
+
+      const goalData = await goalResponse.json();
+      setGoals(goalData);
+      console.log(goalData);
+    }
+
+    getData();
+  }, [selectedDate])
+
 
 
   const formatDate = (date) => {
@@ -39,17 +72,12 @@ function HomePage({ session }) {
   });
   }
 
-  const totalGoal = 2000;
-  const protein = 400;
-  const carbs = 700;
-  const fat = 700;
-  const consumed = protein + carbs + fat;
-  const remaining = totalGoal - consumed;
+  const remaining = goals.calorieGoal - calLog.total_calories;
 
   const pieData = [
-    { name: "Protein", value: protein, grams: 100 },
-    { name: "Carbs", value: carbs, grams: 225 },
-    { name: "Fat", value: fat, grams: 78 },
+    { name: "Protein", value: calLog.total_protein * 4, grams: calLog.total_protein},
+    { name: "Carbs", value: calLog.total_carbs * 4, grams: calLog.total_carbs},
+    { name: "Fat", value: calLog.total_fat * 9, grams: calLog.total_fat},
     { name: "Remaining", value: remaining > 0 ? remaining : 0, grams: null },
   ];
 
@@ -84,37 +112,20 @@ function HomePage({ session }) {
 
         <section className="goals-section">
           <h3>Current Goal</h3>
-          <p>Calories Consumed: {consumed}/{totalGoal} kcal</p>
+          <p>Calories Consumed: {calLog.total_calories}/{goals.calorieGoal} kcal</p>
         </section>
 
         <section className="charts-section horizontal">
           <div className="chart-container relative">
             <h3>Calories Breakdown</h3>
-            <PieChart width={330} height={330}>
-              <Pie
-                data={pieData}
-                cx="50%"
-                cy="50%"
-                innerRadius={60}
-                outerRadius={80}
-                dataKey="value"
-                startAngle={90}
-                endAngle={-270}
-              >
-                {pieData.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={COLORS[index]} />
-                ))}
-              </Pie>
-              <Tooltip
-                formatter={(value, name, props) => {
-                  const grams = pieData[props.dataIndex]?.grams;
-                  return grams ? [`${grams}g`, name] : [`${value} kcal`, name];
-                }}
-                cursor={{ fill: "#f5f5f5" }}
-              />
-              <Legend verticalAlign="bottom" height={25} />
-            </PieChart>
-            <div className="goal-label">{totalGoal} kcal</div>
+            {(goals.calorieGoal && calLog.total_calories !== undefined) ? (
+              <PieChartWrapper pieData={pieData} key={JSON.stringify(pieData)}/>
+            ) : (<> Loading ... </>)
+
+            }
+            {!isNaN(remaining) && (
+              <div className="goal-label">{remaining} Left</div>
+            )}
           </div>
         </section>
         </div>
@@ -124,20 +135,26 @@ function HomePage({ session }) {
             <div className="entry">
               <div className="title">
                 <h4>Breakfast</h4>
+                <div className="space"></div>
+                {calLog.breakfast_calories}
               </div>
               
-              <MealItem name={"Eggs"} cals={'500'}/>
+              {/* <MealItem name={"Eggs"} cals={'500'}/> */}
               
             </div>
             <div className="entry">
 
               <div className="title">
                 <h4>Lunch</h4>
+                <div className="space"></div>
+                {calLog.lunch_calories}
               </div>
             </div>
             <div className="entry">
               <div className="title">
                 <h4>Dinner</h4>
+                <div className="space"></div>
+                {calLog.dinner_calories}
               </div>
             </div>
           </div>
