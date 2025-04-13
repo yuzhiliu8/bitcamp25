@@ -16,9 +16,9 @@ class Yolov8:
     def inference(self, file, id=0):
         show = os.getenv("SHOW_MODEL_INFERENCE", "false").strip().lower() in ("true", "1", "yes")
         save = os.getenv("SAVE_MODEL_INFERENCE", "false").strip().lower() in ("true", "1", "yes")
-        detections = self.model(file, show=show, project="./inference_results", save=save)
+        detections = self.model(file, show=show, save=save)
 
-        self.move_and_rename_latest_detection(id)
+        # self.move_and_rename_latest_detection(id)
 
         # print(self.get_latest_predict_folder())
 
