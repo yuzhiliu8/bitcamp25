@@ -74,6 +74,7 @@ function LogFoodPage() {
       return;
     }
 
+
     // alert("Submitted.");
     // console.log("Submitting image:", image);
     console.log("Grams data:", grams);
@@ -118,6 +119,7 @@ function LogFoodPage() {
 
     console.log(responses);
 
+    navigate("/home");
   };
 
   const handleDelete = () => {

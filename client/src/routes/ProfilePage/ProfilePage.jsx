@@ -13,6 +13,13 @@ function ProfilePage({ session }) {
     protein: 0,
     fat: 0
   });
+
+  const [user, setUser]=useState({
+    first_name: "",
+    last_name: "",
+    email: "",
+  });
+
   
   const fetchGoal = async () => {
     const response = await fetch(`${API_URL}/api/goal/show-goal`,{
@@ -28,11 +35,22 @@ function ProfilePage({ session }) {
       protein:data.proteinGoal,
       fat:data.fatGoal
     }));
-    
-}
+  
+  }
+  const fetchUser = async () => {
+    const response = await fetch(`${API_URL}/api/users/user-by-id`,{
+      credentials: 'include',
+      method: "GET"
+    })
+
+    const data = await response.json()
+
+    setUser(data)
+  }
 
 useEffect(()=>{
     fetchGoal()
+    fetchUser()
 },[])
 
 
@@ -71,14 +89,9 @@ useEffect(()=>{
     });
     
     console.log(response)
+    navigate("/home")
   }
 
-
-
-  const user = {
-    name: "Andrew Guo",
-    email: "andrewguo108.dog@gmail.com",
-  };
 
   return (
     <div className="account-wrapper">
@@ -87,7 +100,7 @@ useEffect(()=>{
 
         <div className="account-field">
           <label>Name</label>
-          <div className="account-value">{user.name}</div>
+          <div className="account-value">{user.firstName + " " + user.lastName}</div>
         </div>
 
         <div className="account-field">
@@ -104,7 +117,7 @@ useEffect(()=>{
             name="calories"
             onChange={handleChange}>
           </input>
-          <label>Carbs</label>
+          <label>Carbs (g)</label>
           <input
             className="acc-val2"
             type="carbs"
@@ -112,7 +125,7 @@ useEffect(()=>{
             name="carbs"
             onChange={handleChange}>
           </input>
-          <label>Protein</label>
+          <label>Protein (g)</label>
           <input
             className="acc-val2"
             type="protein"
@@ -120,7 +133,7 @@ useEffect(()=>{
             name="protein"
             onChange={handleChange}> 
           </input>
-          <label>Fat</label>
+          <label>Fat (g)</label>
           <input
             className="acc-val2"
             type="fat"

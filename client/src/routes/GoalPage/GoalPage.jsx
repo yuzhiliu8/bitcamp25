@@ -65,7 +65,7 @@ export default function GoalPage(){
                 name="calories"
                 onChange={handleChange}>
             </input>
-            <label>Carbs</label>
+            <label>Carbs (g)</label>
             <input
                 className="acc-val2"
                 type="carbs"
@@ -73,7 +73,7 @@ export default function GoalPage(){
                 name="carbs"
                 onChange={handleChange}>
             </input>
-            <label>Protein</label>
+            <label>Protein (g)</label>
             <input
                 className="acc-val2"
                 type="protein"
@@ -81,7 +81,7 @@ export default function GoalPage(){
                 name="protein"
                 onChange={handleChange}> 
             </input>
-            <label>Fat</label>
+            <label>Fat (g)</label>
             <input
                 className="acc-val2"
                 type="fat"
