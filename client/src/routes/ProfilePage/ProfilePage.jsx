@@ -104,7 +104,7 @@ useEffect(()=>{
             name="calories"
             onChange={handleChange}>
           </input>
-          <label>Carbs</label>
+          <label>Carbs (g)</label>
           <input
             className="acc-val2"
             type="carbs"
@@ -112,7 +112,7 @@ useEffect(()=>{
             name="carbs"
             onChange={handleChange}>
           </input>
-          <label>Protein</label>
+          <label>Protein (g)</label>
           <input
             className="acc-val2"
             type="protein"
@@ -120,7 +120,7 @@ useEffect(()=>{
             name="protein"
             onChange={handleChange}> 
           </input>
-          <label>Fat</label>
+          <label>Fat (g)</label>
           <input
             className="acc-val2"
             type="fat"
