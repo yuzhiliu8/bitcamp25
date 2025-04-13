@@ -9,7 +9,6 @@ export default function SideMenu() {
     const [showMenu, setShowMenu] = useState(false)
 
     const menuRef = useRef();
-    const navigate = useNavigate();
 
 
     useEffect(() => {
