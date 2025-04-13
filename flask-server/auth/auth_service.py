@@ -49,4 +49,10 @@ class AuthService:
         return session
     
 
-
+    def delete_session(self,session_id):
+        current = db.select(Session).where(Session.session_id == session_id)
+        print(current)
+        current.expiry_date = datetime.now() -timedelta(days=5)
+        db.session.query(Session).filter(Session.user_id != None).delete(synchronize_session=False)
+        db.session.commit()
+        return None
