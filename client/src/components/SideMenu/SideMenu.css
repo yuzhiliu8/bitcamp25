@@ -11,17 +11,12 @@
     background: none;
     border: none;
     color: #2A160C;
-    cursor: pointer;
     z-index: 1003;
     width:55px;
     height:55px;
     margin-right:5px;
   }
 
-  .hamburger-button:hover{
-    background-color: rgba(0, 0, 0, 0.1); /* semi-transparent black */
-    color: #1a0b05;
-  }
   
   .hamburger-menu {
     position: absolute;
