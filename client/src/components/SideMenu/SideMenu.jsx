@@ -6,7 +6,10 @@ import { API_URL } from "../../util/Constants"
 import './SideMenu.css'
 
 export default function SideMenu() {
+    const [showMenu, setShowMenu] = useState(false)
     const navigate = useNavigate();
+
+
 
     async function signOut(){
       console.log("HISDFGHJKHGFDSASDFGHJKL")
