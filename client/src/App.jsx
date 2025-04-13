@@ -5,6 +5,7 @@ import HomePage from './routes/HomePage/HomePage'
 import RootRedirect from './routes/RootRedirect/RootRedirect'
 import SignUpPage from './routes/SignUpPage/SignUpPage'
 import ProfilePage from './routes/ProfilePage/ProfilePage'
+import GoalPage from './routes/GoalPage/GoalPage'
 
 function App() {
 
@@ -17,6 +18,7 @@ function App() {
                     <Route path="/home" element={<HomePage />}/>
                     <Route path="/signup" element={<SignUpPage />}/>
                     <Route path="/profile" element={<ProfilePage />}/>
+                    <Route path='/goal' element={<GoalPage />}/>
 
                 </Routes>
             </BrowserRouter>
