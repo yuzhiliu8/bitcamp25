@@ -66,7 +66,7 @@ function HomePage({ session }) {
       <section className="charts-section horizontal">
         <div className="chart-container relative">
           <h3>Calories Breakdown</h3>
-          <PieChart width={350} height={350}>
+          <PieChart width={330} height={330}>
             <Pie
               data={pieData}
               cx="50%"
@@ -88,7 +88,7 @@ function HomePage({ session }) {
               }}
               cursor={{ fill: "#f5f5f5" }}
             />
-            <Legend verticalAlign="bottom" height={36} />
+            <Legend verticalAlign="bottom" height={25} />
           </PieChart>
           <div className="goal-label">{totalGoal} kcal</div>
         </div>
