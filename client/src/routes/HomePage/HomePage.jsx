@@ -9,9 +9,13 @@ import {
 import { useNavigate } from 'react-router';
 import SideMenu from '../../components/SideMenu/SideMenu';
 import MealItem from '../../components/MealItem/MealItem';
+import DatePicker from 'react-datepicker';
+import { FaCalendarAlt } from 'react-icons/fa';
+import "react-datepicker/dist/react-datepicker.css";
 import './HomePage.css';
 
 function HomePage({ session }) {
+  const [selectedDate, setSelectedDate] = useState(new Date());
   const menuRef = useRef();
   const navigate = useNavigate();
 
@@ -25,12 +29,15 @@ function HomePage({ session }) {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const today = new Date().toLocaleDateString(undefined, {
-    weekday: "long",
-    month: "short",
-    day: "numeric",
-    year: "numeric",
+
+  const formatDate = (date) => {
+    return date.toLocaleDateString(undefined, {
+      weekday: "long",
+      month: "short",
+      day: "numeric",
+      year: "numeric",
   });
+  }
 
   const totalGoal = 2000;
   const protein = 400;
@@ -53,8 +60,22 @@ function HomePage({ session }) {
 
       <header className="homepage-header">
         <h1>Today's Summary</h1>
-        <p>{today}</p>
+
+        <div className="date">
+          <p>{formatDate(selectedDate)}</p>
+
+          <div className="space"></div>
+          <DatePicker 
+            selected={selectedDate}
+            onChange={(date) => {
+              setSelectedDate(date);
+              console.log(date);
+            }}
+            customInput={<FaCalendarAlt size={20}/>}
+            />
+        </div>
       </header>
+
 
       <SideMenu />
 
