@@ -1,6 +1,7 @@
 from flask import Blueprint, request, make_response
 from auth.auth_service import AuthService
 from auth.session import Session
+from datetime import datetime, timedelta
 import json
 
 auth_controller = Blueprint('auth_controller', __name__)
@@ -20,8 +21,10 @@ def login():
         resp.set_data(session)
         return resp
 
-    resp.set_data(json.dumps({'session_id': session.session_id, 'user_id': session.user_id, "expiry_date": "date"}))
-    resp.set_cookie("sessionID", str(session.session_id))
+    expire_days = 5
+    expire_date = datetime.now() + timedelta(days=expire_days)
+    resp.set_data(json.dumps({'session_id': session.session_id, 'user_id': session.user_id, "expiry_date": expire_date.isoformat()}))
+    resp.set_cookie("sessionID", str(session.session_id), path='/', max_age= (expire_days * 24 * 60 * 60))
     return resp
 
 @auth_controller.route('/authenticate-session', methods=['GET'])
@@ -31,7 +34,7 @@ def authenticate_session():
     session_id = request.cookies.get('sessionID')
     if session_id is None:
         resp.status_code = 401
-        resp.set_data("not logged in")
+        resp.set_data(json.dumps({"msg": "not logged in"}))
         return resp
 
     session = auth_service.authenticate_session(session_id)

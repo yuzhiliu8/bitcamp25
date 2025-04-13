@@ -6,6 +6,8 @@ import RootRedirect from './routes/RootRedirect/RootRedirect'
 import SignUpPage from './routes/SignUpPage/SignUpPage'
 import ProfilePage from './routes/ProfilePage/ProfilePage'
 import GoalPage from './routes/GoalPage/GoalPage'
+import PrivateRoute from './components/PrivateRoute'
+
 
 function App() {
 
@@ -15,10 +17,10 @@ function App() {
                 <Routes>
                     <Route path="/" element={<RootRedirect />}/>
                     <Route path="/login" element={<LoginPage />}/>
-                    <Route path="/home" element={<HomePage />}/>
+                    <Route path="/home" element={<PrivateRoute element={<HomePage />}/>}/>
                     <Route path="/signup" element={<SignUpPage />}/>
-                    <Route path="/profile" element={<ProfilePage />}/>
                     <Route path='/goal' element={<GoalPage />}/>
+                    <Route path="/profile" element={<PrivateRoute element={<ProfilePage />}/>}/>
 
                 </Routes>
             </BrowserRouter>

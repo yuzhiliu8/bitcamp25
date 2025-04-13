@@ -74,13 +74,6 @@ function LoginPage() {
             required
           />
 
-          <div className="options" >
-            <label>
-              <input type="checkbox" />
-              Remember for 30 days
-            </label>
-          </div>
-
           <button type="submit">Sign in</button>
         </form>
 

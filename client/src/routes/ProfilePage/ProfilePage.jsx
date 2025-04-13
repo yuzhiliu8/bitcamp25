@@ -3,7 +3,7 @@ import "./ProfilePage.css";
 import { useNavigate } from "react-router";
 import { API_URL } from "../../util/Constants";
 
-function ProfilePage() {
+function ProfilePage({ session }) {
   const navigate = useNavigate();
 
   const [goals, updateGoals]=useState({

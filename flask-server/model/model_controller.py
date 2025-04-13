@@ -5,13 +5,15 @@ from PIL import Image
 import io
 import os
 
-load_dotenv()
+
 model_controller = Blueprint('model_controller',__name__)
 api_key = os.getenv("USDA_API_KEY")
 model_path = os.getenv("MODEL_PATH")
 model = None
 
-@model_controller.route("/show-goal", methods = ["POST"])
+
+@model_controller.route("/show-model", methods = ["POST"])
+
 def inference():
     if 'image' not in request.files:
         return jsonify({'error': 'No image provided'}), 400
