@@ -16,18 +16,8 @@ import './HomePage.css';
 
 function HomePage({ session }) {
   const [selectedDate, setSelectedDate] = useState(new Date());
-  const menuRef = useRef();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const handleClickOutside = (e) => {
-      if (menuRef.current && !menuRef.current.contains(e.target)) {
-        setShowMenu(false);
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
 
 
   const formatDate = (date) => {
