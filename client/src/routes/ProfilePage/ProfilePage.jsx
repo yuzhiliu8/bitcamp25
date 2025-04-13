@@ -12,6 +12,13 @@ function ProfilePage({ session }) {
     protein: 0,
     fat: 0
   });
+
+  const [user, setUser]=useState({
+    first_name: "",
+    last_name: "",
+    email: "",
+  });
+
   
   const fetchGoal = async () => {
     const response = await fetch(`${API_URL}/api/goal/show-goal`,{
@@ -27,11 +34,22 @@ function ProfilePage({ session }) {
       protein:data.proteinGoal,
       fat:data.fatGoal
     }));
-    
-}
+  
+  }
+  const fetchUser = async () => {
+    const response = await fetch(`${API_URL}/api/users/user-by-id`,{
+      credentials: 'include',
+      method: "GET"
+    })
+
+    const data = await response.json()
+
+    setUser(data)
+  }
 
 useEffect(()=>{
     fetchGoal()
+    fetchUser()
 },[])
 
 
@@ -74,12 +92,6 @@ useEffect(()=>{
   }
 
 
-
-  const user = {
-    name: "Andrew Guo",
-    email: "andrewguo108.dog@gmail.com",
-  };
-
   return (
     <div className="account-wrapper">
       <div className="account-box">
@@ -87,7 +99,7 @@ useEffect(()=>{
 
         <div className="account-field">
           <label>Name</label>
-          <div className="account-value">{user.name}</div>
+          <div className="account-value">{user.firstName + " " + user.lastName}</div>
         </div>
 
         <div className="account-field">
