@@ -1,0 +1,59 @@
+  .btn-container{
+    display:flex;
+    justify-content: center;
+    align-items: center;;
+  }
+  .hamburger-button {
+    position:absolute;
+    top:5px;
+    right: 0;
+    font-size: 25px;
+    background: none;
+    border: none;
+    color: #2A160C;
+    cursor: pointer;
+    z-index: 1003;
+    width:55px;
+    height:55px;
+    margin-right:5px;
+  }
+
+  .hamburger-button:hover{
+    background-color: rgba(0, 0, 0, 0.1); /* semi-transparent black */
+    color: #1a0b05;
+  }
+  
+  .hamburger-menu {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 8px 0 0 8px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.08);
+    width: 270px;
+    height:100%;
+    z-index: 1002;
+  }
+
+  .menu-logo{
+    margin-left:15px;
+    width:180px;
+  }
+  
+  .hamburger-menu button {
+    background: none;
+    border: none;
+    text-align: left;
+    padding: 10px 20px;
+    font-size: 14px;
+    color: #2A160C;
+    cursor: pointer;
+    width: 100%;
+  }
+  
+  .hamburger-menu button:hover {
+    background-color: #f4f4f4;
+  }

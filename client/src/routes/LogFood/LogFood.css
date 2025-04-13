@@ -1,0 +1,122 @@
+.logfood-wrapper {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f9f9fb;
+  }
+  
+  .logfood-box {
+    width: 100%;
+    max-width: 600px;
+    background-color: #ffffff;
+    padding: 60px 50px;
+    border-radius: 12px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+    text-align: center;
+  }  
+  
+  .logfood-box h2 {
+    font-size: 26px;
+    color: #2A160C;
+    margin-bottom: 10px;
+  }
+  
+  .logfood-box p {
+    color: #888;
+    font-size: 14px;
+    margin-bottom: 20px;
+  }
+  
+  .logfood-box input[type="file"] {
+    margin: 10px 0 20px;
+  }
+  
+  .image-preview {
+    width: 100%;
+    max-width: 500px;
+    height: 300px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f4f4f4;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+  }
+  
+  .image-preview img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    border-radius: 6px;
+  }
+  
+  .logfood-box button {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 6px;
+    font-size: 15px;
+    background-color: #2A160C;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  
+  .logfood-box button:hover {
+    background-color: #1e0f08;
+  }
+  
+  .back-button {
+    margin-top: 12px;
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #2A160C;
+    border-radius: 6px;
+    font-size: 15px;
+    background-color: transparent;
+    color: #2A160C;
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s;
+  }
+  
+  .back-button:hover {
+    background-color: #2A160C;
+    color: white;
+  }
+  
+  .delete-button {
+    margin-top: 12px;
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ff4d4d;
+    border-radius: 6px;
+    font-size: 15px;
+    background-color: transparent;
+    color: #ff4d4d;
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s;
+  }
+  
+  .delete-button:hover {
+    background-color: #ff4d4d;
+    color: white;
+  }
+  
+  .file-upload-label {
+    display: inline-block;
+    padding: 10px;
+    background-color: #f4f4f4;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    cursor: pointer;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .file-upload-label:hover {
+    background-color: #e0e0e0;
+  }  
