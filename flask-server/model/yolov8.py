@@ -11,8 +11,10 @@ class Yolov8:
         self.model = YOLO(model_path)
         self.api_key = api_key
 
-    def inference(self, file):
-        detections = self.model(file, show = bool(os.getenv("SHOW_MODEL_INFERENCE")), save = bool(os.getenv("SAVE_MODEL_INFERENCE")))
+    def inference(self, file, id=0):
+        show = os.getenv("SHOW_MODEL_INFERENCE", "false").strip().lower() in ("true", "1", "yes")
+        save = os.getenv("SAVE_MODEL_INFERENCE", "false").strip().lower() in ("true", "1", "yes")
+        detections = self.model(file, show=show, project="./predict", save=save)
 
         # Counter to track class occurrences
         class_counter = Counter()
@@ -72,3 +74,8 @@ class Yolov8:
         data = response.json()
         return data['foods'][0] if data['foods'] else None
     
+    def rename_image_in_place(current_path, new_name):
+        dir_path = os.path.dirname(current_path)
+        new_path = os.path.join(dir_path, new_name)
+        os.rename(current_path, new_path)
+        return new_path

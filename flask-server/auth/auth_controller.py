@@ -49,3 +49,9 @@ def authenticate_session():
     resp.mimetype = "application/json"
     return resp
 
+@auth_controller.route('/delete-session', methods =["POST"])
+def delete_session():
+    print("hi")
+    session_id = request.cookies.get('sessionID')
+    auth_service.delete_session(session_id)
+    return {"message":"success"}

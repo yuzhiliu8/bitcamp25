@@ -163,7 +163,7 @@ function HomePage({ session }) {
       </div>
 
 
-      <button className="dropbtn">Log Food</button>
+      <button className="dropbtn" onClick={() => navigate("/logfood")}>Log Food</button>
       
 
     </div>

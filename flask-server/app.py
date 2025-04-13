@@ -25,9 +25,9 @@ def create_app():
     app.register_blueprint(goals_controller, url_prefix = "/api/goal")
 
 
-    run_model = os.getenv("RUN_MODEL")
-    if run_model == "True":
-        print("registered blueprint")
+    run_model = os.getenv("RUN_MODEL", "false").strip().lower() in ("true", "1", "yes")
+    if run_model:
+        # print("registered blueprint")
         app.register_blueprint(model_controller, url_prefix = "/api/model")
 
     conn_string = os.getenv("DATABASE_URL")
