@@ -12,6 +12,28 @@ function ProfilePage({ session }) {
     protein: 0,
     fat: 0
   });
+  
+  const fetchGoal = async () => {
+    const response = await fetch(`${API_URL}/api/goal/show-goal`,{
+      credentials: 'include'
+    })
+    console.log(response);
+
+    const data = await response.json();
+
+    updateGoals(prev => ({
+      calories:data.calorieGoal,
+      carbs:data.carbGoal,
+      protein:data.proteinGoal,
+      fat:data.fatGoal
+    }));
+    
+}
+
+useEffect(()=>{
+    fetchGoal()
+},[])
+
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -26,16 +48,17 @@ function ProfilePage({ session }) {
 
     const formData = new FormData();
     formData.append('calorie_goal', goals.calories);
-    formData.append('carbs_goal', goals.carbs);
+    formData.append('carb_goal', goals.carbs);
     formData.append('protein_goal', goals.protein);
     formData.append('fat_goal', goals.fat);
     
     const user_input = {
       "calorie_goal": goals.calories,
-      "carbs_goal": goals.carbs,
+      "carb_goal": goals.carbs,
       "protein_goal": goals.protein,
       "fat_goal":goals.fat
     }
+    console.log(user_input)
 
     const response = await fetch(`${API_URL}/api/goal/update-goal/`, {
       method: 'PATCH',
@@ -43,12 +66,14 @@ function ProfilePage({ session }) {
       credentials: 'include',
       headers: {
         "Content-Type": "application/json",
-      },
+      },    
     });
     
     console.log(response)
     // add stuff to make this work can either make it update on the spot or display a success message
   }
+
+
 
   const user = {
     name: "Andrew Guo",
