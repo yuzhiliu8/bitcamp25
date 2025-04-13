@@ -42,6 +42,7 @@ def create_goal():
     protein = data.get("protein_goal")
     carb = data.get("carb_goal")
     fat = data.get("fat_goal")
+    print(session)
     userId = session.user_id
     
     newGoal = goals_service.create_goal(calorie, protein, carb, fat, userId)
