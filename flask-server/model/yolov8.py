@@ -14,8 +14,10 @@ class Yolov8:
     def inference(self, file):
         show = os.getenv("SHOW_MODEL_INFERENCE", "false").strip().lower() in ("true", "1", "yes")
         save = os.getenv("SAVE_MODEL_INFERENCE", "false").strip().lower() in ("true", "1", "yes")
-        next_id = self.get_next_image_id("./predict")
-        detections = self.model(file, show=show, project="./predict", name=next_id, save=save)
+        # next_id = self.get_next_image_id("./predict")
+        # detections = self.model(file, show=show, project="./predict", name=next_id, save=save)
+        detections = self.model(file, show=show, project="./predict", save=save)
+
 
         # Counter to track class occurrences
         class_counter = Counter()
@@ -76,6 +78,8 @@ class Yolov8:
         return data['foods'][0] if data['foods'] else None
     
     def get_next_image_id(self, directory):
+        os.makedirs(directory, exist_ok=True)
+
         # List all files and get the highest numeric filename
         existing_files = [f for f in os.listdir(directory) if f.endswith((".png", ".jpg", ".jpeg"))]
         ids = []
