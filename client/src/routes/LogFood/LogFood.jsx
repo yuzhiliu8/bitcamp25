@@ -25,7 +25,7 @@ function LogFoodPage() {
       return;
     }
 
-    alert("Image submitted to AI model!");
+    alert("Submitted.");
     console.log("Submitting image:", image);
   };
 

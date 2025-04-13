@@ -101,6 +101,60 @@
   z-index: 1003;
 }
 
+.date{
+  display: flex;
+  flex-direction: row;
+  width: 230px;
+}
+
+.dashboard{
+  display:flex;
+  gap:10px;
+  margin-right:238px;
+}
+
+.right{
+  flex: 1;
+}
+
+.diary{
+  display:flex;
+  flex-direction: row;
+  height:100%;
+  justify-content: space-evenly;
+  gap: 2px
+}
+
+.entry{
+  flex: 1;
+  overflow-y: auto;
+  border: 1px solid #ccc;   
+  padding: 3px;
+  height: 473px;
+  text-align: center;
+
+  display:flex;
+  flex-direction: column;
+  gap:5px;
+}
+
+.meal-item{
+  padding:10px;
+  text-align: left;
+  border: 2px solid grey;
+}
+
+.title{
+  padding: 10px;
+  border: 2px solid #ccc;
+}
+
+
+.left{
+  display:flex;
+  flex-direction: column;
+}
+
 .dropup {
   position: relative;
   display: inline-block;
