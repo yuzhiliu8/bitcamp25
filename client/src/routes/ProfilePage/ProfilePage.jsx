@@ -2,6 +2,7 @@ import React, { useState, useEffect} from "react";
 import "./ProfilePage.css";
 import { useNavigate } from "react-router";
 import { API_URL } from "../../util/Constants";
+import SideMenu from "../../components/SideMenu/SideMenu";
 
 function ProfilePage({ session }) {
   const navigate = useNavigate();
