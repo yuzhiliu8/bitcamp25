@@ -27,6 +27,7 @@ class GoalsService:
             return None
         
         goal = Goal(calorie_goal = calorie, protein_goal = protein, carb_goal = carb, fat_goal = fat, user_id = userId)
+        print(goal.to_json())
         
         db.session.add(goal)
         db.session.commit()
@@ -43,18 +44,19 @@ class GoalsService:
         return goal
     
     def init_db(self):
-        calorie = 50
-        protein = 50
-        carb = 50
-        fat = 50
-        goal = Goal(
-            calorie_goal = calorie,
-            protein_goal = protein,
-            carb_goal = carb,
-            fat_goal = fat,
-            user_id = 1
-        )
+        # calorie = 50
+        # protein = 50
+        # carb = 50
+        # fat = 50
+        # goal = Goal(
+        #     calorie_goal = calorie,
+        #     protein_goal = protein,
+        #     carb_goal = carb,
+        #     fat_goal = fat,
+        #     user_id = 1
+        # )
 
-        db.session.add(goal)
-        db.session.commit()
-        return goal
+        # db.session.add(goal)
+        # db.session.commit()
+        # return goal
+        pass

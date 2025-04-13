@@ -35,6 +35,8 @@ function SignUpPage() {
             last_name: form.lastName,
         }
 
+       
+
         const response = await fetch(`${API_URL}/api/users/create-user`, {
             method: "POST",
             body: JSON.stringify(body),
@@ -42,6 +44,17 @@ function SignUpPage() {
                 "Content-Type": "application/json",
             },
         });
+        
+        const formData = new FormData();
+        formData.append('email', form.email);
+        formData.append('password', form.password);
+
+        const logIn = await fetch(`${API_URL}/api/auth/login`, {
+            method: 'POST',
+            body: formData,
+            credentials: 'include',
+        });
+        console.log(logIn)
 
         if (response.status === 400) {
             console.error("email already used!");
@@ -51,7 +64,7 @@ function SignUpPage() {
 
         const data = await response.json();
         console.log(data); 
-        navigate("/login");
+        navigate("/goal");
     };
 
     return (
