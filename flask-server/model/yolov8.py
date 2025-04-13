@@ -2,7 +2,9 @@ from ultralytics import YOLO
 from collections import Counter
 import requests
 from dotenv import load_dotenv
+from pathlib import Path
 import os
+import shutil
 
 load_dotenv()
 
@@ -14,7 +16,11 @@ class Yolov8:
     def inference(self, file, id=0):
         show = os.getenv("SHOW_MODEL_INFERENCE", "false").strip().lower() in ("true", "1", "yes")
         save = os.getenv("SAVE_MODEL_INFERENCE", "false").strip().lower() in ("true", "1", "yes")
-        detections = self.model(file, show=show, project="./predict", save=save)
+        detections = self.model(file, show=show, project="./inference_results", save=save)
+
+        self.move_and_rename_latest_detection(id)
+
+        # print(self.get_latest_predict_folder())
 
         # Counter to track class occurrences
         class_counter = Counter()
@@ -78,4 +84,56 @@ class Yolov8:
         dir_path = os.path.dirname(current_path)
         new_path = os.path.join(dir_path, new_name)
         os.rename(current_path, new_path)
+        return new_path
+    
+    def get_most_recent_image(folder_path):
+        # Get all files (images) in the folder
+        files = list(Path(folder_path).glob("*.*"))
+        
+        if not files:
+            return None  # No images found
+
+        # Return the file with the latest modification time
+        most_recent_file = max(files, key=os.path.getmtime)
+        return str(most_recent_file)
+    
+    def get_latest_predict_folder(self, base="./inference_results"):
+        folders = [f for f in Path(base).iterdir() if f.is_dir() and f.name.startswith("predict")]
+        if not folders:
+            return None
+        return max(folders, key=os.path.getmtime)
+    
+    def move_and_rename_latest_detection(self, new_name, dest_folder="all_detections"):
+        # Path where Ultralytics saves results
+        base_path = Path("./inference_results")
+        
+        # Find the most recent `predict*` folder
+        folders = sorted(
+            [f for f in base_path.iterdir() if f.is_dir() and f.name.startswith("predict")],
+            key=lambda x: x.stat().st_mtime,
+            reverse=True
+        )
+
+        if not folders:
+            raise FileNotFoundError("No prediction folders found.")
+        
+        latest_folder = folders[0]
+        
+        # Find the first .jpg image in the latest prediction folder
+        images = list(latest_folder.glob("*.jpg"))
+        if not images:
+            raise FileNotFoundError("No images found in the latest prediction folder.")
+        
+        image_path = images[0]
+
+        # Ensure the destination folder exists
+        dest_path = Path(dest_folder)
+        dest_path.mkdir(parents=True, exist_ok=True)
+
+        # Create new path
+        new_path = dest_path / f"{new_name}.jpg"
+        
+        # Move and rename the file
+        shutil.move(str(image_path), str(new_path))
+
         return new_path
