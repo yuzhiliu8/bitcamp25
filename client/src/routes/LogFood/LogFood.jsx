@@ -60,10 +60,11 @@ function LogFoodPage() {
       alert("Please enter grams of each food.");
       return;
     }
-
+    navigate("/home")
     alert("Submitted.");
     console.log("Submitting image:", image);
     console.log("Grams data:", grams);
+    
   };
 
   const handleDelete = () => {
