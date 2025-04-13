@@ -7,6 +7,7 @@ import {
   Legend,
 } from 'recharts';
 import { useNavigate } from 'react-router';
+import SideMenu from '../../components/SideMenu/SideMenu';
 import './HomePage.css';
 
 function HomePage({ session }) {
@@ -49,23 +50,13 @@ function HomePage({ session }) {
 
   return (
     <div className="homepage">
-      <div className="hamburger" ref={menuRef}>
-        <button className="hamburger-button" onClick={() => setShowMenu(!showMenu)}>
-          ☰
-        </button>
-        {showMenu && (
-          <div className="hamburger-menu">
-            <button onClick={() => navigate('/profile') }>My Profile</button>
-            <button onClick={() => navigate('/login') }>Sign Out</button>
-          </div>
-        )}
-      </div>
 
       <header className="homepage-header">
         <h1>Today's Summary</h1>
         <p>{today}</p>
       </header>
 
+      <SideMenu />
 
       <section className="goals-section">
         <h3>Current Goal</h3>
