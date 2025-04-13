@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router';
+import {API_URL} from "../../util/Constants";
 import './LogFood.css';
 
 function LogFoodPage() {
@@ -11,20 +12,37 @@ function LogFoodPage() {
   const [detectedItems, setDetectedItems] = useState([]); // State to store detected items and their details
   const [grams, setGrams] = useState({}); // Store grams for each item
 
-  const handleImageChange = (e) => {
+  const handleImageChange = async (e) => {
     const file = e.target.files[0];
     setImage(file);
     if (file) {
       setPreview(URL.createObjectURL(file));
       setFileName(file.name);
-
+      const formData = new FormData()
+      formData.append('image',file)
+      const response = await fetch(`${API_URL}/api/model/show-model`,{
+        method:'POST',
+        body: formData,
+        credentials: "include",
+      })
+      const data = await response.json()
+      console.log(data)
       // Here you would call your computer vision model to detect items
       // Simulating with a mock example of detected items
-      const detected = [
-        { id: 1, name: 'Apple', calPerGram: 0.52, carbsPerGram: 0.14, proteinPerGram: 0.01, fatPerGram: 0.01 },
-        { id: 2, name: 'Banana', calPerGram: 0.89, carbsPerGram: 0.23, proteinPerGram: 0.01, fatPerGram: 0.03 }
-      ];
+      // const detected = [
+      //   { id: 1, name: 'Apple', calPerGram: 0.52, carbsPerGram: 0.14, proteinPerGram: 0.01, fatPerGram: 0.01 },
+      //   { id: 2, name: 'Banana', calPerGram: 0.89, carbsPerGram: 0.23, proteinPerGram: 0.01, fatPerGram: 0.03 }
+      // ];
+      const detected = Object.entries(data).map(([name, values], index) => ({
+        id: index + 1,
+        name: name,
+        calPerGram: values.cals_per_gram,
+        carbsPerGram: values.carbs,
+        proteinPerGram: values.protein,
+        fatPerGram: values.fat
+      }));
       setDetectedItems(detected); // Set the detected items
+      console.log(detectedItems)
     }
   };
 
