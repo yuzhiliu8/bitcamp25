@@ -75,16 +75,28 @@
     padding: 12px;
     border: 1px solid #2A160C;
     border-radius: 6px;
-    font-size: 15px;
+    font-size: 15px;background-color: #2A160C;
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    position: fixed;
+    bottom: 15px;
+    right: 45px;
+    width: 180px;
+    height: 60px;
+    border-radius: 20px;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    z-index: 1003;
     background-color: transparent;
     color: #2A160C;
     cursor: pointer;
-    transition: background-color 0.2s, color 0.2s;
-  }
-  
-  .back-button:hover {
-    background-color: #2A160C;
-    color: white;
+    transition: color 0.2s, background-color 0.2s;
   }
   
   .delete-button {
