@@ -6,7 +6,7 @@ import {
   Tooltip,
   Legend,
 } from 'recharts';
-import { useNavigate } from 'react-router';
+import { useNavigate, useLocation } from 'react-router';
 import SideMenu from '../../components/SideMenu/SideMenu';
 import MealItem from '../../components/MealItem/MealItem';
 import DatePicker from 'react-datepicker';
@@ -18,7 +18,11 @@ import { formatSelectedDate } from '../../util/util';
 import { API_URL } from '../../util/Constants';
 
 function HomePage({ session }) {
-  const [selectedDate, setSelectedDate] = useState(new Date());
+  const location = useLocation();
+
+  const date = location.state?.date || new Date();
+  console.log("location date", date);
+  const [selectedDate, setSelectedDate] = useState(date);
   const [calLog, setCalLog] = useState({});
   const [goals, setGoals] = useState({});
   const navigate = useNavigate();

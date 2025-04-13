@@ -8,6 +8,7 @@ import { formatSelectedDate } from '../../util/util';
 function LogFoodPage() {
   const navigate = useNavigate();
   const location = useLocation();
+  const selectedDate = location.state?.date || new Date();
   
   const [image, setImage] = useState(null);
   const [preview, setPreview] = useState(null);
@@ -177,7 +178,7 @@ function LogFoodPage() {
               <div key={item.id} className="item-form">
                 <label>{item.name}</label>
                 <input
-                  type="number"
+                  type="text"
                   placeholder={`Enter grams of ${item.name}`}
                   onChange={(e) => handleGramsChange(item.id, e.target.value)}
                 />
@@ -198,13 +199,17 @@ function LogFoodPage() {
           </div>
         )}
 
+        {(detectedItems.length > 0) ? 
+        (
         <button onClick={handleSubmit}>Submit</button>
-
+        ) : (
+          <>Loading ...</>
+        )}
         {preview && (
           <button className="delete-button" onClick={handleDelete}>Cancel</button>
         )}
       </div>
-      <button className="back-button" onClick={() => navigate("/home")}>Back to Home</button>
+      <button className="back-button" onClick={() => navigate("/home", {state: {date: selectedDate}})}>Back to Home</button>
     </div>
   );
 };
