@@ -11,13 +11,10 @@ class Yolov8:
         self.model = YOLO(model_path)
         self.api_key = api_key
 
-    def inference(self, file):
+    def inference(self, file, id=0):
         show = os.getenv("SHOW_MODEL_INFERENCE", "false").strip().lower() in ("true", "1", "yes")
         save = os.getenv("SAVE_MODEL_INFERENCE", "false").strip().lower() in ("true", "1", "yes")
-        # next_id = self.get_next_image_id("./predict")
-        # detections = self.model(file, show=show, project="./predict", name=next_id, save=save)
         detections = self.model(file, show=show, project="./predict", save=save)
-
 
         # Counter to track class occurrences
         class_counter = Counter()
@@ -77,17 +74,8 @@ class Yolov8:
         data = response.json()
         return data['foods'][0] if data['foods'] else None
     
-    def get_next_image_id(self, directory):
-        os.makedirs(directory, exist_ok=True)
-
-        # List all files and get the highest numeric filename
-        existing_files = [f for f in os.listdir(directory) if f.endswith((".png", ".jpg", ".jpeg"))]
-        ids = []
-
-        for filename in existing_files:
-            name = os.path.splitext(filename)[0]
-            if name.isdigit():
-                ids.append(int(name))
-
-        return max(ids, default=0) + 1
-    
+    def rename_image_in_place(current_path, new_name):
+        dir_path = os.path.dirname(current_path)
+        new_path = os.path.join(dir_path, new_name)
+        os.rename(current_path, new_path)
+        return new_path
