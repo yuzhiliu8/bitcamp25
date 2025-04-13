@@ -25,7 +25,8 @@ def inference():
     # get macros
     init_model()
     all_macros = model.inference(image)
-    return jsonify(all_macros)
+   # print(f"DJFKSFJLDKSFJDKS{(all_macros)}"   )
+    return (all_macros)
 
 def init_model():
     global model
