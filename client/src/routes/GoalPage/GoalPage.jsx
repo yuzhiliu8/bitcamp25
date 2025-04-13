@@ -26,7 +26,7 @@ export default function GoalPage(){
 
         const formData = new FormData();
         formData.append('calorie_goal', goals.calories);
-        formData.append('carbs_goal', goals.carbs);
+        formData.append('carb_goal', goals.carbs);
         formData.append('protein_goal', goals.protein);
         formData.append('fat_goal', goals.fat);
         
