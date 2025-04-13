@@ -6,6 +6,7 @@ import RootRedirect from './routes/RootRedirect/RootRedirect'
 import SignUpPage from './routes/SignUpPage/SignUpPage'
 import ProfilePage from './routes/ProfilePage/ProfilePage'
 import PrivateRoute from './components/PrivateRoute'
+import LogFood from './routes/LogFood/LogFood'
 
 function App() {
 
@@ -18,7 +19,7 @@ function App() {
                     <Route path="/home" element={<PrivateRoute element={<HomePage />}/>}/>
                     <Route path="/signup" element={<SignUpPage />}/>
                     <Route path="/profile" element={<PrivateRoute element={<ProfilePage />}/>}/>
-
+                    <Route path="/logfood" element={<PrivateRoute element={<LogFood />}/>}/>
                 </Routes>
             </BrowserRouter>
         </div>
