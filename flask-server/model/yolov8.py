@@ -1,6 +1,10 @@
 from ultralytics import YOLO
 from collections import Counter
 import requests
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
 
 class Yolov8:
     def __init__(self, model_path, api_key):
@@ -8,7 +12,7 @@ class Yolov8:
         self.api_key = api_key
 
     def inference(self, file):
-        detections = self.model(file, show=True, project="./predict", save = True)
+        detections = self.model(file, show = bool(os.getenv("SHOW_MODEL_INFERENCE")), save = bool(os.getenv("SAVE_MODEL_INFERENCE")))
 
         # Counter to track class occurrences
         class_counter = Counter()

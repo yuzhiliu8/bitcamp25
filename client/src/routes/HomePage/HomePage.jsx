@@ -9,9 +9,7 @@ import {
 import { useNavigate } from 'react-router';
 import './HomePage.css';
 
-
-
-function HomePage() {
+function HomePage({ session }) {
   const [showMenu, setShowMenu] = useState(false);
   const menuRef = useRef();
   const navigate = useNavigate();
@@ -47,35 +45,37 @@ function HomePage() {
     { name: "Remaining", value: remaining > 0 ? remaining : 0, grams: null },
   ];
 
-  const COLORS = ["#6A38D9", "#F4A261", "#E76F51", "#E0E0E0"];
+  const COLORS = ["#6A38D9", "#F4A261", "#E76F51", "#6E6E6E"];
 
   return (
     <div className="homepage">
-      {/* Hamburger Menu */}
       <div className="hamburger" ref={menuRef}>
         <button className="hamburger-button" onClick={() => setShowMenu(!showMenu)}>
           ☰
         </button>
         {showMenu && (
           <div className="hamburger-menu">
+            <button onClick={() => navigate('/profile') }>My Profile</button>
             <button onClick={() => navigate('/login') }>Sign Out</button>
-            <button onClick={() => navigate('/pastlogs')}>Past Logs</button>
-            <button onClick={() => navigate('/goals')}>Set Goals</button>
           </div>
         )}
       </div>
 
-      {/* Header */}
       <header className="homepage-header">
         <h1>Today's Summary</h1>
         <p>{today}</p>
       </header>
 
-      {/* Pie Chart */}
+
+      <section className="goals-section">
+        <h3>Current Goal</h3>
+        <p>Calories Consumed: {consumed}/{totalGoal} kcal</p>
+      </section>
+
       <section className="charts-section horizontal">
         <div className="chart-container relative">
           <h3>Calories Breakdown</h3>
-          <PieChart width={220} height={220}>
+          <PieChart width={350} height={350}>
             <Pie
               data={pieData}
               cx="50%"
@@ -103,13 +103,10 @@ function HomePage() {
         </div>
       </section>
 
-      {/* Goal Display */}
-      <section className="goals-section">
-        <h3>Current Goal</h3>
-        <p>Daily Calorie Goal: {totalGoal} kcal</p>
-      </section>
 
-      <button className="add-button">+</button>
+      <button className="dropbtn">Log Food</button>
+      
+
     </div>
   );
 };
