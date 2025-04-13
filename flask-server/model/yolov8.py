@@ -12,7 +12,10 @@ class Yolov8:
         self.api_key = api_key
 
     def inference(self, file):
-        detections = self.model(file, show = bool(os.getenv("SHOW_MODEL_INFERENCE")), save = bool(os.getenv("SAVE_MODEL_INFERENCE")))
+        show = os.getenv("SHOW_MODEL_INFERENCE", "false").strip().lower() in ("true", "1", "yes")
+        save = os.getenv("SAVE_MODEL_INFERENCE", "false").strip().lower() in ("true", "1", "yes")
+        next_id = self.get_next_image_id("./predict")
+        detections = self.model(file, show=show, project="./predict", name=next_id, save=save)
 
         # Counter to track class occurrences
         class_counter = Counter()
@@ -71,4 +74,16 @@ class Yolov8:
         response = requests.get(url, params=params)
         data = response.json()
         return data['foods'][0] if data['foods'] else None
+    
+    def get_next_image_id(self, directory):
+        # List all files and get the highest numeric filename
+        existing_files = [f for f in os.listdir(directory) if f.endswith((".png", ".jpg", ".jpeg"))]
+        ids = []
+
+        for filename in existing_files:
+            name = os.path.splitext(filename)[0]
+            if name.isdigit():
+                ids.append(int(name))
+
+        return max(ids, default=0) + 1
     
