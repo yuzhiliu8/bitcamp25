@@ -3,12 +3,13 @@ import { useNavigate } from 'react-router';
 import './LogFood.css';
 
 function LogFoodPage() {
-
   const navigate = useNavigate();
-
+  
   const [image, setImage] = useState(null);
   const [preview, setPreview] = useState(null);
   const [fileName, setFileName] = useState('');
+  const [detectedItems, setDetectedItems] = useState([]); // State to store detected items and their details
+  const [grams, setGrams] = useState({}); // Store grams for each item
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -16,7 +17,19 @@ function LogFoodPage() {
     if (file) {
       setPreview(URL.createObjectURL(file));
       setFileName(file.name);
+
+      // Here you would call your computer vision model to detect items
+      // Simulating with a mock example of detected items
+      const detected = [
+        { id: 1, name: 'Apple', calPerGram: 0.52, carbsPerGram: 0.14, proteinPerGram: 0.01, fatPerGram: 0.01 },
+        { id: 2, name: 'Banana', calPerGram: 0.89, carbsPerGram: 0.23, proteinPerGram: 0.01, fatPerGram: 0.03 }
+      ];
+      setDetectedItems(detected); // Set the detected items
     }
+  };
+
+  const handleGramsChange = (id, value) => {
+    setGrams(prev => ({ ...prev, [id]: value }));
   };
 
   const handleSubmit = () => {
@@ -25,14 +38,22 @@ function LogFoodPage() {
       return;
     }
 
+    if (Object.keys(grams).length !== detectedItems.length) {
+      alert("Please enter grams of each food.");
+      return;
+    }
+
     alert("Submitted.");
     console.log("Submitting image:", image);
+    console.log("Grams data:", grams);
   };
 
   const handleDelete = () => {
     setImage(null);
     setPreview(null);
     setFileName('');
+    setDetectedItems([]);
+    setGrams({});
   };
 
   return (
@@ -55,6 +76,31 @@ function LogFoodPage() {
         {preview && (
           <div className="image-preview">
             <img src={preview} alt="Preview" />
+          </div>
+        )}
+
+        {detectedItems.length > 0 && (
+          <div className="item-form-container">
+            {detectedItems.map(item => (
+              <div key={item.id} className="item-form">
+                <label>{item.name}</label>
+                <input
+                  type="number"
+                  placeholder={`Enter grams of ${item.name}`}
+                  onChange={(e) => handleGramsChange(item.id, e.target.value)}
+                />
+                <div className="nutritional-info">
+                  <div className="cal-carb-row">
+                    <span>Calories per gram: {item.calPerGram}</span>
+                    <span>Carbs per gram: {item.carbsPerGram}</span>
+                  </div>
+                  <div className="protein-fat-row">
+                    <span>Protein per gram: {item.proteinPerGram}</span>
+                    <span>Fat per gram: {item.fatPerGram}</span>
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         )}
 
