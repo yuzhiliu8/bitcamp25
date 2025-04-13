@@ -1,0 +1,25 @@
+
+.meal-item{
+  padding:10px;
+  text-align: left;
+  border: 2px solid grey;
+}
+
+
+
+.mi-container{
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 16px;
+    color: #333;
+}
+
+
+.space{
+    flex: 1;
+}
+
+.cals{
+    padding-right: 5px;
+}
