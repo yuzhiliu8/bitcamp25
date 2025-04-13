@@ -3,4 +3,8 @@
 /model/food-101
 yolov8x-oiv7.pt
 __pycache__/
+
+/flask-server/runs
+
 runs/
+
