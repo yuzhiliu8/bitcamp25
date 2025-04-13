@@ -70,6 +70,7 @@ useEffect(()=>{
     });
     
     console.log(response)
+    navigate("/home")
   }
 
 
