@@ -20,7 +20,6 @@ export default function PrivateRoute({ element }) {
             }
 
             const s = await resp.json();
-            console.log(s);
             setSession(s);
         }
 

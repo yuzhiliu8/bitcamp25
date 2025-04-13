@@ -40,7 +40,7 @@ class CalorieLogService:
             food_item.protein,
             food_item.fat)
         
-        cal_log.diary[food_item.meal_type + "_ids"].append(food_item.id)
+        cal_log.diary[food_item.meal_type].append(food_item.to_dict())
         flag_modified(cal_log, "diary")
         db.session.commit()
         return cal_log
@@ -87,6 +87,13 @@ class CalorieLogService:
         
         return cal_log
     
+    def get_food_by_id(self, id):
+        stmt = db.select(FoodItem).where(FoodItem.id == id)
+        resp = db.session.execute(stmt).scalars().first()
+
+        print(resp.to_dict())
+
+        return resp
 
     def init_db(self):
         pass
