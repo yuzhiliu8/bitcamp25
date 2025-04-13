@@ -2,6 +2,7 @@ from ultralytics import YOLO
 from collections import Counter
 import requests
 from dotenv import load_dotenv
+from pathlib import Path
 import os
 
 load_dotenv()
@@ -74,8 +75,22 @@ class Yolov8:
         data = response.json()
         return data['foods'][0] if data['foods'] else None
     
+    def rename_recent_inference_id():
+        pass
+    
     def rename_image_in_place(current_path, new_name):
         dir_path = os.path.dirname(current_path)
         new_path = os.path.join(dir_path, new_name)
         os.rename(current_path, new_path)
         return new_path
+    
+    def get_most_recent_image(folder_path):
+        # Get all files (images) in the folder
+        files = list(Path(folder_path).glob("*.*"))
+        
+        if not files:
+            return None  # No images found
+
+        # Return the file with the latest modification time
+        most_recent_file = max(files, key=os.path.getmtime)
+        return str(most_recent_file)
