@@ -8,7 +8,7 @@ class Yolov8:
         self.api_key = api_key
 
     def inference(self, file):
-        detections = self.model(file, show = True, save = True)
+        detections = self.model(file, show=True, project="./predict", save = True)
 
         # Counter to track class occurrences
         class_counter = Counter()

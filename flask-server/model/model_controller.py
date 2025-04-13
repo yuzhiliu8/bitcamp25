@@ -21,4 +21,9 @@ def inference():
 
     # get macros
     all_macros = model.inference(image)
+
     return jsonify(all_macros)
+
+@model_controller.route("/get-inference-image", methods = ["GET"])
+def get_inference_image():
+    pass
