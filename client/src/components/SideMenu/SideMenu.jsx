@@ -46,8 +46,8 @@ export default function SideMenu() {
         {showMenu && (
           <div className="hamburger-menu">
             <img className="menu-logo" src={logo} alt="MacroMaster" />
+            <button onClick={() => navigate('/home')}>Home</button>
             <button onClick={() => navigate('/profile') }>My Profile</button>
-
             <button onClick={signOut}>Sign Out</button>
           </div>
         )}

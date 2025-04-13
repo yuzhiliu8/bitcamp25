@@ -14,6 +14,7 @@ import PieChartWrapper from '../../components/PieChartWrapper/PieChartWrapper';
 import { FaCalendarAlt } from 'react-icons/fa';
 import "react-datepicker/dist/react-datepicker.css";
 import './HomePage.css';
+import { formatSelectedDate } from '../../util/util';
 import { API_URL } from '../../util/Constants';
 
 function HomePage({ session }) {
@@ -25,16 +26,11 @@ function HomePage({ session }) {
 
   useEffect(() => {
     const getData = async () => {
-      const formatter = new Intl.DateTimeFormat('en-CA', {
-        timeZone: 'America/New_York',
-        year: 'numeric',
-        month: '2-digit',
-        day: '2-digit',
-      });
-
-      const formattedEST = formatter.format(selectedDate); 
       const formData = new FormData();
+      const formattedEST = formatSelectedDate(selectedDate);
+      console.log(formattedEST);
       formData.append('date', formattedEST);
+
 
       const response = await fetch(`${API_URL}/api/callogs/get-cal-log`, {
         method: "POST",
@@ -171,7 +167,7 @@ function HomePage({ session }) {
       </div>
 
 
-      <button className="dropbtn" onClick={() => navigate("/logfood")}>Log Food</button>
+      <button className="dropbtn" onClick={() => navigate("/logfood", {state: {date: selectedDate}})}>Log Food</button>
       
 
     </div>
