@@ -8,12 +8,14 @@ goals_service = GoalsService()
 auth_service = AuthService()
 
 
-@goals_controller.route("/show-goal/", methods = ["GET"])
+@goals_controller.route("/show-goal", methods = ["GET"])
 def show_goal():
     session_id = request.cookies.get("sessionID")
     session = auth_service.authenticate_session(session_id)
+    print(f"IM GONNA CRASH OUT {session.user_id}")
     goal = goals_service.goal_by_id(session.user_id)
     if goal is None:
+        print("andrew guo")
         resp = make_response("Goal not created!")
         resp.status_code = 404
         return resp
@@ -30,7 +32,8 @@ def update_goal():
         return resp
     
     data = request.get_json()
-    newGoal = goals_service.update_goal(session.user_id, data.get("calorie_goal"),data.get("protein_goal"),data.get("carb_goal"),data.get("fat_goal"))
+    print(f"SKBIDI {data.get("carb_goal")}")
+    newGoal = goals_service.update_goal(session.user_id, data.get("calorie_goal"), data.get("protein_goal"), data.get("carb_goal"),data.get("fat_goal"))
     return jsonify(newGoal.to_json())
 
 @goals_controller.route("/create-goal", methods = ["POST"])
@@ -50,10 +53,6 @@ def create_goal():
     if newGoal is None:
         resp = make_response("Goal alreaady created")
         resp.status_code = 400
-        return resp
-    elif newGoal == 0:
-        resp = make_response("Goal Updated")
-        resp.status_code = 200
         return resp
     
     return jsonify(newGoal.to_json())

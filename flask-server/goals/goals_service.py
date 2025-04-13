@@ -8,8 +8,12 @@ class GoalsService:
         pass
     
     def goal_by_id(self,user_id):
+        print(f"in here now {user_id}")
         try: 
-            goal = Goal.query.get(user_id)
+            goal = db.session.execute(
+                db.select(Goal).where(Goal.user_id == user_id)
+            ).scalar_one_or_none()
+            print(f"DFJKDSLFJSKLFJDSKF {goal}")
             return goal
         except:
             return None
@@ -34,9 +38,12 @@ class GoalsService:
         return goal
         
     def update_goal(self,user_id,calorie,protein,carb,fat):
-        goal = Goal.query.get(user_id)
-        goal.calorie_goal= (calorie)
-        goal.protein_goal= (protein)
+        goal = db.session.execute(
+            db.select(Goal).where(Goal.user_id == user_id)
+        ).scalar_one_or_none()
+        print(f"DJFKLS {carb}")
+        goal.calorie_goal= calorie
+        goal.protein_goal= protein
         goal.carb_goal= carb
         goal.fat_goal= fat
         

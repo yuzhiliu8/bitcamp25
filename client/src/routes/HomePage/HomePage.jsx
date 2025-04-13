@@ -7,10 +7,11 @@ import {
   Legend,
 } from 'recharts';
 import { useNavigate } from 'react-router';
+import SideMenu from '../../components/SideMenu/SideMenu';
+import MealItem from '../../components/MealItem/MealItem';
 import './HomePage.css';
 
 function HomePage({ session }) {
-  const [showMenu, setShowMenu] = useState(false);
   const menuRef = useRef();
   const navigate = useNavigate();
 
@@ -49,59 +50,79 @@ function HomePage({ session }) {
 
   return (
     <div className="homepage">
-      <div className="hamburger" ref={menuRef}>
-        <button className="hamburger-button" onClick={() => setShowMenu(!showMenu)}>
-          ☰
-        </button>
-        {showMenu && (
-          <div className="hamburger-menu">
-            <button onClick={() => navigate('/profile') }>My Profile</button>
-            <button onClick={() => navigate('/login') }>Sign Out</button>
-          </div>
-        )}
-      </div>
 
       <header className="homepage-header">
         <h1>Today's Summary</h1>
         <p>{today}</p>
       </header>
 
+      <SideMenu />
 
-      <section className="goals-section">
-        <h3>Current Goal</h3>
-        <p>Calories Consumed: {consumed}/{totalGoal} kcal</p>
-      </section>
+      <div className="dashboard">
+        <div className="left">
 
-      <section className="charts-section horizontal">
-        <div className="chart-container relative">
-          <h3>Calories Breakdown</h3>
-          <PieChart width={350} height={350}>
-            <Pie
-              data={pieData}
-              cx="50%"
-              cy="50%"
-              innerRadius={60}
-              outerRadius={80}
-              dataKey="value"
-              startAngle={90}
-              endAngle={-270}
-            >
-              {pieData.map((entry, index) => (
-                <Cell key={`cell-${index}`} fill={COLORS[index]} />
-              ))}
-            </Pie>
-            <Tooltip
-              formatter={(value, name, props) => {
-                const grams = pieData[props.dataIndex]?.grams;
-                return grams ? [`${grams}g`, name] : [`${value} kcal`, name];
-              }}
-              cursor={{ fill: "#f5f5f5" }}
-            />
-            <Legend verticalAlign="bottom" height={36} />
-          </PieChart>
-          <div className="goal-label">{totalGoal} kcal</div>
+        <section className="goals-section">
+          <h3>Current Goal</h3>
+          <p>Calories Consumed: {consumed}/{totalGoal} kcal</p>
+        </section>
+
+        <section className="charts-section horizontal">
+          <div className="chart-container relative">
+            <h3>Calories Breakdown</h3>
+            <PieChart width={330} height={330}>
+              <Pie
+                data={pieData}
+                cx="50%"
+                cy="50%"
+                innerRadius={60}
+                outerRadius={80}
+                dataKey="value"
+                startAngle={90}
+                endAngle={-270}
+              >
+                {pieData.map((entry, index) => (
+                  <Cell key={`cell-${index}`} fill={COLORS[index]} />
+                ))}
+              </Pie>
+              <Tooltip
+                formatter={(value, name, props) => {
+                  const grams = pieData[props.dataIndex]?.grams;
+                  return grams ? [`${grams}g`, name] : [`${value} kcal`, name];
+                }}
+                cursor={{ fill: "#f5f5f5" }}
+              />
+              <Legend verticalAlign="bottom" height={25} />
+            </PieChart>
+            <div className="goal-label">{totalGoal} kcal</div>
+          </div>
+        </section>
         </div>
-      </section>
+
+        <div className="right">
+          <div className="diary">
+            <div className="entry">
+              <div className="title">
+                <h4>Breakfast</h4>
+              </div>
+              
+              <MealItem name={"Eggs"} cals={'500'}/>
+              
+            </div>
+            <div className="entry">
+
+              <div className="title">
+                <h4>Lunch</h4>
+              </div>
+            </div>
+            <div className="entry">
+              <div className="title">
+                <h4>Dinner</h4>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
 
 
       <button className="dropbtn">Log Food</button>
